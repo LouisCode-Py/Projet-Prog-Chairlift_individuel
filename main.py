@@ -17,13 +17,13 @@ class MainApp(ctk.CTk) :
 
         self.grid_rowconfigure(0, weight=1)
         self.sliders = Sliders(self, self.__chairlift, self.mettre_a_jour)
-        self.sliders.grid(row=0, column=0, sticky="nsew", padx=12, pady=12)
+        self.sliders.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=12, pady=12)
 
         self.graph = GraphControl(self, self.__chairlift)
         self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
         # Affichage du label du nombre de personne par heure avec les paramètres courants.
-        ctk.CTkLabel(self, bg_color="green", text=str(self.__chairlift.calculerNombreDePersonnesParHeure())).grid(row=1, column=1, sticky="nsew", padx=12, pady=12)
+        ctk.CTkLabel(self, bg_color="green", text="Nombre de personnes par heure :" + str(self.__chairlift.calculerNombreDePersonnesParHeure())).grid(row=1, column=1, sticky="nsew", padx=12, pady=12)
 
         # Modifier le poids des différentes colonnes
         self.grid_columnconfigure(0, weight=1)
