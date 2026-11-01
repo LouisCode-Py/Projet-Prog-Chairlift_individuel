@@ -65,21 +65,24 @@ class Chairlift:
             return False
 
     def calculerTempsTrajet(self):
+        if self.__vitesse == 0:
+            return 0
         tempsTrajet = self.__longeurDuTrajet / self.__vitesse
         return tempsTrajet
     
-    def calculerTempsDeMonter(self):
-        tempsTrajet = self.calculerTempsTrajet()
-        tempsDeMonter = tempsTrajet + self.__tempsEmbarquement + self.__tempsDebarquement
-        return tempsDeMonter
 
     def calculerTempsDeCycle(self):
         tempsTrajet = self.calculerTempsTrajet()
+        if tempsTrajet == 0:
+            return 0
         tempsDeCycle = 2*tempsTrajet + self.__tempsEmbarquement + self.__tempsDebarquement
         return tempsDeCycle
 
     def calculerNombreDePersonnesParHeure(self):
         tempsDeCycle = self.calculerTempsDeCycle()
+        if tempsDeCycle == 0:
+            print("fuck")
+            return 0
         nombreDePersonnesParHeure = (3600 / tempsDeCycle) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise
         print(nombreDePersonnesParHeure)
         return int(nombreDePersonnesParHeure)
