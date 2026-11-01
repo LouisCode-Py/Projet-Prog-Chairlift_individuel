@@ -1,14 +1,17 @@
 import customtkinter as ctk
 from tkinter import IntVar
 
+# Constante des paddings pour les widgets de chaque paramètre
 PADDING_EN_Y = 30
 PADDING_EN_X = 10
 
 class Sliders(ctk.CTkFrame) :
 
     def __init__(self, parent, chairlift, sur_mise_a_jour) :
+        # Passage du Ctk parent pendant le constructeur, donc pour qu'il soit dans la MainApp
         super().__init__(parent)
 
+        # Initialiser le Chairlift courant et appeler la création des widgets
         self.chairlift = chairlift
         self.creer_widgets()
         self.mise_a_jour = sur_mise_a_jour
@@ -16,13 +19,14 @@ class Sliders(ctk.CTkFrame) :
 
     def creer_widgets(self) :
 
+        # Créer les boutons d'importation et d'exportation, leur passer la commande _quand_importer qui est appelé si les boutons sont cliqués
         self.bouton_importer = ctk.CTkButton(self, text="Importer un CSV", command=self._quand_importer)
         self.bouton_importer.grid(row=6, column=0, padx=PADDING_EN_X, pady=20)
         self.bouton_exporter = ctk.CTkButton(self, text="Exporter un CSV", command=self._quand_exporter)
         self.bouton_exporter.grid(row=6, column=1, padx=PADDING_EN_X, pady=20)
         
 
-        # initialiser la variable pour les radiobutton, empeche que plusieurs soient cochés
+        # initialiser la variable pour les "radiobutton", empêche que plusieurs soient cochés
         self.radio_var = IntVar(value=0)
 
         # Appeler les fonctions de création de chacun des paramètres du chairlift
@@ -38,148 +42,23 @@ class Sliders(ctk.CTkFrame) :
         
         self.creer_widgets_capacite()
         
-
-
-    def _quand_slider_cable(self, valeur) :
-        self.taille_cable = int(valeur)
-        self.text_cable.configure(text=str(self.taille_cable) + " m")
-
-        if self.chairlift.setLongeurDuTrajet(valeur) :
-            print("chairlift cable modifié")
-        else :
-            print("erreur de limite??")
-        self.mise_a_jour()
-    
-    def _quand_slider_chaise(self, valeur) :
-        self.nb_chaise = int(valeur)
-        self.text_chaise.configure(text=str(self.nb_chaise))
-
-        if self.chairlift.setNombreDeChaise(valeur) :
-            print("chairlift chaise modifié")
-        else :
-            print("erreur de limite??")
-        self.mise_a_jour()
-
-    def _quand_slider_vitesse(self, valeur) :
-        self.vitesse = round(float(valeur), 1)
-        self.text_vitesse.configure(text=str(self.vitesse) + " m/s")
-
-        if self.chairlift.setVitesse(valeur) :
-            print("chairlift vitesse modifié")
-        else :
-            print("erreur de limite??")
-        self.mise_a_jour()
-
-    def _quand_slider_embarque(self, valeur) :
-        self.temps_embarquement = int(valeur)
-        self.text_embarque.configure(text=str(self.temps_embarquement) + " s")
-
-        if self.chairlift.setTempsEmbarquement(valeur) :
-            print("chairlift embarquement modifié")
-        else :
-            print("erreur de limite??")
-        self.mise_a_jour()
-
-    def _quand_slider_debarque(self, valeur) :
-        self.temps_debarquement = int(valeur)
-        self.text_debarque.configure(text=str(self.temps_debarquement) + " s")
-
-        if self.chairlift.setTempsDebarquement(valeur) :
-            print("chairlift débarquement modifié")
-        else :
-            print("erreur de limite??")
-        self.mise_a_jour()
-
-    def _quand_slider_capacite(self, valeur) :
-        self.capacite_chaise = int(valeur)
-        self.text_capacite.configure(text=str(self.capacite_chaise))
-
-        if self.chairlift.setNombreDePersonnesParChaise(valeur) :
-            print("chairlift capacité modifié")
-        else :
-            print("erreur de limite??")
-        self.mise_a_jour()
-
-
-    def _actualiser_slider(self):
-        selection = self.radio_var.get()
-
-        if selection == 0 : 
-            #TODO A VOIR????
-            #self.chairilift.calculerNombreDePersonnesParHeure()
-            print("Ce qu'on met quand rien n'est selectionné...????")
-
-        """LONGUEUR CABLE"""
-        self.slider_cable.configure(state="disabled" if selection == 1 else "normal")
-
-        resultat1 =  self.chairlift.setParametreObserver("longeurDuTrajet") if selection == 1 else True
-        if selection == 1  and resultat1 :
-            print("Graph longeur cable dans la bonne place")
-            self.mise_a_jour()
-        if not resultat1 : 
-            print("Erreur dans le setter 1")
-
-        """NOMBRE DE CHAISES"""
-        self.slider_chaise.configure(state="disabled" if selection == 2 else "normal")
-
-        resultat2 = self.chairlift.setParametreObserver("nombreDeChaise") if selection == 2 else True
-        if selection == 2 and resultat2 :
-            print("Graph nombre chaise dans la bonne place")
-            self.mise_a_jour()
-        if not resultat2 :
-            print("Erreur dans le setter 2")
-
-        """VITESSE"""
-        self.slider_vitesse.configure(state="disabled" if selection == 3 else "normal")
-        
-        resultat3 = self.chairlift.setParametreObserver("vitesse") if selection == 3 else True
-        if selection == 3 and resultat3:
-            print("Graph vitesse dans la bonne place")
-            self.mise_a_jour()
-        if not resultat3 :
-            print("Erreur dans le setter 3")
-
-        """TEMPS EMBARQUEMENT"""
-        self.slider_embarque.configure(state="disabled" if selection == 4 else "normal")
-        resultat4 = self.chairlift.setParametreObserver("tempsEmbarquement") if selection == 4 else True
-        if selection == 4 and  resultat4:
-            print("Graph temps embarquement dans la bonne place")
-            self.mise_a_jour()
-        if not resultat4 :
-            print("Erreur dans le setter 4")
-
-        """TEMPS DEBARQUEMENT"""
-        self.slider_debarque.configure(state="disabled" if selection == 5 else "normal")
-        resultat5 = self.chairlift.setParametreObserver("tempsDebarquement") if selection == 5 else True
-        if selection == 5 and resultat5 :
-            print("Graph temps debarquement dans la bonne place")
-            self.mise_a_jour()
-        if not resultat5 :
-            print("Erreur dans le setter 5")
-
-        """CAPACITÉ CHAISE"""
-        self.slider_capacite.configure(state="disabled" if selection == 6 else "normal")
-        resultat6 = self.chairlift.setParametreObserver("nombreDePersonnesParChaise") if selection == 6 else True
-        if selection == 6 and resultat6 :
-            print("Graph capacité dans la bonne place")
-            self.mise_a_jour()
-        if not resultat6 :
-            print("Erreur dans le setter 6")
-        
-        
-    
-
+    # Les suivantes sont appelées pour créer sliders, texte et boutons, etc. de chacun des paramètres.
+    # Le fonctionnement de celles-ci est identique dépendant des paramètres, l'explication est donc seulement fait une fois.
     def creer_widgets_cable(self) :
+        # Création du texte lié au paramètre spécifique
         ctk.CTkLabel(self, text="Longueur du câble").grid(row=0, column=0, sticky="w", padx=PADDING_EN_X, pady=PADDING_EN_Y)
-        
+
+        # Création du slider, sa commande est relié à _quand_slider_"paramètre"
         self.slider_cable = ctk.CTkSlider(self, from_=0, to=3000, number_of_steps=3000)
         self.slider_cable.set(0)
         self.slider_cable.configure(command=self._quand_slider_cable)
         self.slider_cable.grid(row=0, column=1, sticky="ew", padx=PADDING_EN_X, pady=PADDING_EN_Y)
-        
+
+        # Première création du texte affichant la valeur du slider
         self.text_cable = ctk.CTkLabel(self, text="0" + " m")
         self.text_cable.grid(row=0, column=2, sticky="ew", padx=PADDING_EN_X, pady=PADDING_EN_Y)
-        
+
+        # Création du radio button permettant de choisir le paramètre observé et d'en sélectionner un seul, on leur passe tous la variable radio_var qui permet de suivre lequel est choisi. 
         self.case_cable = ctk.CTkRadioButton(self, text="", command=self._actualiser_slider, variable=self.radio_var, value=1)
         self.case_cable.grid(row=0, column=3, sticky="e")
 
@@ -253,8 +132,148 @@ class Sliders(ctk.CTkFrame) :
         self.case_capacite = ctk.CTkRadioButton(self, text="", command=self._actualiser_slider, variable=self.radio_var, value=6)
         self.case_capacite.grid(row=5, column=3, sticky="e")
 
+
+    # Les suivantes sont appelés lorsque leurs sliders respectifs changent de valeurs
+    # Le fonctionnement de celles-ci est identique dépendant des paramètres, l'explication est donc seulement fait une fois.
+    def _quand_slider_cable(self, valeur) :
+        # Initialiser la valeur du paramètre en tant que tel.
+        self.taille_cable = int(valeur)
+        # Mettre le bon chiffre dans le texte du slider, dépendant de la valeur courante
+        self.text_cable.configure(text=str(self.taille_cable) + " m")
+
+        # Donner cette valeur à l'instance de la classe Chairlift qui gère les calculs avec cette valeur
+        if self.chairlift.setLongeurDuTrajet(valeur) :
+            print("chairlift cable modifié")
+        else :
+            print("erreur de limite")
+        # Mettre à jour le graphique et calculs, etc. (voir cette fonction)
+        self.mise_a_jour()
+    
+    def _quand_slider_chaise(self, valeur) :
+        self.nb_chaise = int(valeur)
+        self.text_chaise.configure(text=str(self.nb_chaise))
+    
+        if self.chairlift.setNombreDeChaise(valeur) :
+            print("chairlift chaise modifié")
+        else :
+            print("erreur de limite??")
+        self.mise_a_jour()
+    
+    def _quand_slider_vitesse(self, valeur) :
+        self.vitesse = round(float(valeur), 1)
+        self.text_vitesse.configure(text=str(self.vitesse) + " m/s")
+    
+        if self.chairlift.setVitesse(valeur) :
+            print("chairlift vitesse modifié")
+        else :
+            print("erreur de limite??")
+        self.mise_a_jour()
+    
+    def _quand_slider_embarque(self, valeur) :
+        self.temps_embarquement = int(valeur)
+        self.text_embarque.configure(text=str(self.temps_embarquement) + " s")
+    
+        if self.chairlift.setTempsEmbarquement(valeur) :
+            print("chairlift embarquement modifié")
+        else :
+            print("erreur de limite??")
+        self.mise_a_jour()
+    
+    def _quand_slider_debarque(self, valeur) :
+        self.temps_debarquement = int(valeur)
+        self.text_debarque.configure(text=str(self.temps_debarquement) + " s")
+    
+        if self.chairlift.setTempsDebarquement(valeur) :
+            print("chairlift débarquement modifié")
+        else :
+            print("erreur de limite??")
+        self.mise_a_jour()
+    
+    def _quand_slider_capacite(self, valeur) :
+        self.capacite_chaise = int(valeur)
+        self.text_capacite.configure(text=str(self.capacite_chaise))
+    
+        if self.chairlift.setNombreDePersonnesParChaise(valeur) :
+            print("chairlift capacité modifié")
+        else :
+            print("erreur de limite??")
+        self.mise_a_jour()
+    
+    
+    def _actualiser_slider(self):
+        # Aller chercher la valeur de radio_var pour déterminer ce qui est sélectionné
+        selection = self.radio_var.get()
+    
+        if selection == 0 : 
+            print("Aucun paramètre observé")
+    
+        """LONGUEUR CABLE"""
+        # Encore une fois c'est pareil pour chacun des paramètres
+        # On rend le slider inutilisable si la case est sélectionnée
+        self.slider_cable.configure(state="disabled" if selection == 1 else "normal")
+
+        # appeler le setter du paramètre observé quand la case est choisie
+        resultat1 =  self.chairlift.setParametreObserver("longeurDuTrajet") if selection == 1 else True
+
+        # Vérifier la sélection et mettre à jour le graph
+        if selection == 1  and resultat1 :
+            print("Graph longeur cable dans la bonne place")
+            self.mise_a_jour()
+        if not resultat1 : 
+            print("Erreur dans le setter 1")
+    
+        """NOMBRE DE CHAISES"""
+        self.slider_chaise.configure(state="disabled" if selection == 2 else "normal")
+    
+        resultat2 = self.chairlift.setParametreObserver("nombreDeChaise") if selection == 2 else True
+        if selection == 2 and resultat2 :
+            print("Graph nombre chaise dans la bonne place")
+            self.mise_a_jour()
+        if not resultat2 :
+            print("Erreur dans le setter 2")
+    
+        """VITESSE"""
+        self.slider_vitesse.configure(state="disabled" if selection == 3 else "normal")
+    
+        resultat3 = self.chairlift.setParametreObserver("vitesse") if selection == 3 else True
+        if selection == 3 and resultat3:
+            print("Graph vitesse dans la bonne place")
+            self.mise_a_jour()
+        if not resultat3 :
+            print("Erreur dans le setter 3")
+    
+        """TEMPS EMBARQUEMENT"""
+        self.slider_embarque.configure(state="disabled" if selection == 4 else "normal")
+        resultat4 = self.chairlift.setParametreObserver("tempsEmbarquement") if selection == 4 else True
+        if selection == 4 and  resultat4:
+            print("Graph temps embarquement dans la bonne place")
+            self.mise_a_jour()
+        if not resultat4 :
+            print("Erreur dans le setter 4")
+    
+        """TEMPS DEBARQUEMENT"""
+        self.slider_debarque.configure(state="disabled" if selection == 5 else "normal")
+        resultat5 = self.chairlift.setParametreObserver("tempsDebarquement") if selection == 5 else True
+        if selection == 5 and resultat5 :
+            print("Graph temps debarquement dans la bonne place")
+            self.mise_a_jour()
+        if not resultat5 :
+            print("Erreur dans le setter 5")
+    
+        """CAPACITÉ CHAISE"""
+        self.slider_capacite.configure(state="disabled" if selection == 6 else "normal")
+        resultat6 = self.chairlift.setParametreObserver("nombreDePersonnesParChaise") if selection == 6 else True
+        if selection == 6 and resultat6 :
+            print("Graph capacité dans la bonne place")
+            self.mise_a_jour()
+        if not resultat6 :
+            print("Erreur dans le setter 6")
+    
+    
+    # Fonctions appelées lors de l'appui des boutons d'import et d'export
     def _quand_importer(self) :
-        self.chairlift.importToCSV()
+        #TODO ajouter le bon PATH a la fonction de Chairlift???? 
+        self.chairlift.importFromCSV()
         print("Bouton importer")
 
     def _quand_exporter(self) :
@@ -263,8 +282,5 @@ class Sliders(ctk.CTkFrame) :
 
     
 
-
-#TODO COMMENTE TON CODE!
-#TODO les set des sliders doivent se fier au csv ou bien 0 si pas d'importé (voir lignes 23 et 19 où c'est = à 0)
+#TODO les set des sliders doivent se fier au csv ou bien 0 si pas d'importé (voir lignes 23 et 19 où c'est = à 0) ex ligne 53
 #TODO enlever les prints des if de setters...
-#TODO print dans l'app le nombre de personne....
