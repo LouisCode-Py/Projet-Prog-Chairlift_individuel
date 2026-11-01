@@ -205,9 +205,7 @@ class Sliders(ctk.CTkFrame) :
         selection = self.radio_var.get()
     
         if selection == 0 : 
-            #TODO A VOIR????
-            
-            print("Ce qu'on met quand rien n'est selectionné...????")
+            print("Aucun paramètre observé")
     
         """LONGUEUR CABLE"""
         # Encore une fois c'est pareil pour chacun des paramètres
@@ -284,6 +282,5 @@ class Sliders(ctk.CTkFrame) :
 
     
 
-#TODO les set des sliders doivent se fier au csv ou bien 0 si pas d'importé (voir lignes 23 et 19 où c'est = à 0)
+#TODO les set des sliders doivent se fier au csv ou bien 0 si pas d'importé (voir lignes 23 et 19 où c'est = à 0) ex ligne 53
 #TODO enlever les prints des if de setters...
-#TODO print dans l'app le nombre de personne....

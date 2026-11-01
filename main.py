@@ -15,10 +15,12 @@ class MainApp(ctk.CTk) :
         # Initialiser, en privé, le Chairlift courant
         self.__chairlift = Chairlift()
 
+        # Initialiser la frame des sliders et autres boutons
         self.grid_rowconfigure(0, weight=1)
         self.sliders = Sliders(self, self.__chairlift, self.mettre_a_jour)
         self.sliders.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=12, pady=12)
 
+        # Initialiser la frame du Graphique
         self.graph = GraphControl(self, self.__chairlift)
         self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
