@@ -36,7 +36,6 @@ class MainApp(ctk.CTk) :
 
     # mettre à jour le graphique 
     def mettre_a_jour(self):
-        #TODO regler le edge case de aucun paramètre observé, c'est juste vide 
         self.graph.mise_a_jour_image()
 
 
