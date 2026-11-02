@@ -213,7 +213,7 @@ class Sliders(ctk.CTkFrame) :
         self.slider_cable.configure(state="disabled" if selection == 1 else "normal")
 
         # appeler le setter du paramètre observé quand la case est choisie
-        resultat1 =  self.chairlift.definirParametreObserver("longeurDuTrajet") if selection == 1 else True
+        resultat1 =  self.chairlift.definirParametreObserver("longueurDuTrajet") if selection == 1 else True
 
         # Vérifier la sélection et mettre à jour le graph
         if selection == 1  and resultat1 :
@@ -274,17 +274,17 @@ class Sliders(ctk.CTkFrame) :
     def _quand_importer(self) :
     
         
-        path = filedialog.askopenfilename(defaultextension=".csv",
+        chemin = filedialog.askopenfilename(defaultextension=".csv",
         filetypes=[("Fichiers CSV", "*.csv")])
-        if path:
-            self.chairlift.importerDepuisCSV(path)
+        if chemin:
+            self.chairlift.importerDepuisCSV(chemin)
         print("Bouton importer")
 
     def _quand_exporter(self) :
-        path = filedialog.asksaveasfilename(defaultextension=".csv",
+        chemin = filedialog.asksaveasfilename(defaultextension=".csv",
         filetypes=[("Fichiers CSV", "*.csv")])
-        if path:
-            self.chairlift.exporterVersCSV(path)
+        if chemin:
+            self.chairlift.exporterVersCSV(chemin)
         print("Bouton exporter")
 
     
