@@ -88,13 +88,7 @@ class Chairlift:
         return int(nombreDePersonnesParHeure)
     
     def calculerNombreDePersonnesParametreManquant(self, valeurParametre):
-        if self.__parametreObserver == "tempsEmbarquement":
-            return int((3600 / (2*(self.__longeurDuTrajet/self.__vitesse) + valeurParametre + self.__tempsDebarquement)) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise)
-                    
-        elif self.__parametreObserver == "tempsDebarquement":
-            return int((3600 / (2*(self.__longeurDuTrajet/self.__vitesse) + self.__tempsEmbarquement + valeurParametre)) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise)
-                    
-        if valeurParametre > 0:
+        try:
             if self.__parametreObserver == "vitesse":
                 return int((3600 / (2*(self.__longeurDuTrajet/valeurParametre) + self.__tempsEmbarquement + self.__tempsDebarquement)) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise)
             
@@ -107,9 +101,15 @@ class Chairlift:
             
             elif self.__parametreObserver == "nombreDePersonnesParChaise":
                 return int((3600 / (2*(self.__longeurDuTrajet/self.__vitesse) + self.__tempsEmbarquement + self.__tempsDebarquement)) * self.__nombreDeChaise * valeurParametre)
+            elif self.__parametreObserver == "tempsEmbarquement":
+                return int((3600 / (2*(self.__longeurDuTrajet/self.__vitesse) + valeurParametre + self.__tempsDebarquement)) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise)
+                                
+            elif self.__parametreObserver == "tempsDebarquement":
+                return int((3600 / (2*(self.__longeurDuTrajet/self.__vitesse) + self.__tempsEmbarquement + valeurParametre)) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise)
+                        
             else:
                 return 0
-        else:
+        except (ZeroDivisionError, TypeError, ValueError, OverflowError):
             return 0
 
     def getGraphData(self, resolution, min, max):
