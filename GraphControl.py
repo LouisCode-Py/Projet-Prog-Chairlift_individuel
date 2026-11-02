@@ -32,10 +32,10 @@ class GraphControl(tk.Frame):
         ## DOIT PRENDRE EN PARAMETRE FONCTION QUI VERIFIER SI DONNÉES ONT CHARGER CORRECTEMENT??
         ## Attribu titre doit etre modifiable -- quel sont les titres possible???, faire comme avec titrex
         
-        donnee = self.modele.getGraphData(11,0,10)
+        donnee = self.modele.obtenirDonneesGraphique(11,0,10)
 
         ##Creation dictionnaire des noms d'axe des x possible et accesseur de parametre ajouter
-        parametre_obs = self.modele.getParametreObserver()
+        parametre_obs = self.modele.obtenirParametreObserver()
 
         #Creation attribut du titre de l'axe des x
         titrex_dic ={"vitesse":["Vitesse"], "nombreDeChaise":["Nombre de chaise"], "longeurDuTrajet":["Longeur du trajet"],
@@ -68,8 +68,8 @@ class GraphControl(tk.Frame):
 #
 #root = tk.Tk()
 #mon_Chairlift = Chairlift()
-#mon_Chairlift.test()
-#mon_Chairlift.setParametreObserver("vitesse")
+#mon_Chairlift.tester()
+#mon_Chairlift.definirParametreObserver("vitesse")
 #
 #g = GraphControl(root, modele=mon_Chairlift)
 #

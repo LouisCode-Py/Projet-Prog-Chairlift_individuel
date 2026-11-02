@@ -15,49 +15,49 @@ class Chairlift:
         self.__parametreObserver = "none"
 
 
-    def setVitesse(self, vitesse):
+    def definirVitesse(self, vitesse):
         if vitesse >= 0:
             self.__vitesse = vitesse
             return True
         else:
             return False
 
-    def setNombreDeChaise(self,nombreDeChaise):
+    def definirNombreDeChaise(self,nombreDeChaise):
         if nombreDeChaise >= 0:
             self.__nombreDeChaise = nombreDeChaise
             return True
         else:
             return False
 
-    def setLongeurDuTrajet(self,longeurDuTrajet):
-        if longeurDuTrajet > 0:
-            self.__longeurDuTrajet = longeurDuTrajet
+    def definirLongueurDuTrajet(self, longueurDuTrajet):
+        if longueurDuTrajet > 0:
+            self.__longeurDuTrajet = longueurDuTrajet
             return True
         else:
             return False
 
-    def setTempsEmbarquement(self, tempsEmbarquement):
+    def definirTempsEmbarquement(self, tempsEmbarquement):
         if tempsEmbarquement >= 0:
             self.__tempsEmbarquement = tempsEmbarquement
             return True
         else:
             return False
 
-    def setTempsDebarquement(self,tempsDebarquement):
+    def definirTempsDebarquement(self,tempsDebarquement):
         if tempsDebarquement >= 0:
             self.__tempsDebarquement = tempsDebarquement
             return True
         else:
             return False
 
-    def setNombreDePersonnesParChaise(self, nombreDePersonnesParChaise):
+    def definirNombreDePersonnesParChaise(self, nombreDePersonnesParChaise):
         if nombreDePersonnesParChaise >= 0:
             self.__nombreDePersonnesParChaise = nombreDePersonnesParChaise
             return True
         else:
             return False
         
-    def setParametreObserver(self, parametreObserver):
+    def definirParametreObserver(self, parametreObserver):
         if parametreObserver in ["vitesse", "nombreDeChaise", "longeurDuTrajet", "tempsEmbarquement", "tempsDebarquement", "nombreDePersonnesParChaise", "none"]:
             self.__parametreObserver = parametreObserver
             return True
@@ -112,8 +112,8 @@ class Chairlift:
         except (ZeroDivisionError, TypeError, ValueError, OverflowError):
             return 0
 
-    def getGraphData(self, resolution, min, max):
-        x = np.linspace(min, max, num=resolution)
+    def obtenirDonneesGraphique(self, resolution, minimum, maximum):
+        x = np.linspace(minimum, maximum, num=resolution)
         y = np.array([
             self.calculerNombreDePersonnesParametreManquant(value)
             for value in x
@@ -121,10 +121,10 @@ class Chairlift:
     
         return np.column_stack((x, y))
 
-    def getParametreObserver(self):
+    def obtenirParametreObserver(self):
         return self.__parametreObserver
     
-    def exportToCSV(self, path):
+    def exporterVersCSV(self, path):
         ligne = [
             ("vitesse", self.__vitesse),
             ("nombreDeChaise", self.__nombreDeChaise),
@@ -141,16 +141,16 @@ class Chairlift:
             writer.writerows(ligne)
 
 
-    def importFromCSV(self, path):
+    def importerDepuisCSV(self, path):
         try:
             setters = {
-                "vitesse": (self.setVitesse, float),
-                "nombreDeChaise": (self.setNombreDeChaise, int),
-                "nombreDePersonnesParChaise": (self.setNombreDePersonnesParChaise, int),
-                "longeurDuTrajet": (self.setLongeurDuTrajet, float),
-                "tempsEmbarquement": (self.setTempsEmbarquement, float),
-                "tempsDebarquement": (self.setTempsDebarquement, float),
-                "parametreObserver": (self.setParametreObserver, str),
+                "vitesse": (self.definirVitesse, float),
+                "nombreDeChaise": (self.definirNombreDeChaise, int),
+                "nombreDePersonnesParChaise": (self.definirNombreDePersonnesParChaise, int),
+                "longeurDuTrajet": (self.definirLongueurDuTrajet, float),
+                "tempsEmbarquement": (self.definirTempsEmbarquement, float),
+                "tempsDebarquement": (self.definirTempsDebarquement, float),
+                "parametreObserver": (self.definirParametreObserver, str),
             }
 
             with open(path, newline="", encoding="utf-8") as f:
@@ -164,30 +164,30 @@ class Chairlift:
         except (OSError, ValueError, KeyError) as error:
             print("Chargement impossible :", error)
 
-    def test(self):
+    def tester(self):
         print("input vitesse: ")
         vitesse = float(input())
-        self.setVitesse(vitesse)
+        self.definirVitesse(vitesse)
 
         print("input nombre de chaises: ")
         nombreDeChaise = int(input())
-        self.setNombreDeChaise(nombreDeChaise)
+        self.definirNombreDeChaise(nombreDeChaise)
 
         print("input longueur du trajet: ")
         longeurDuTrajet = float(input())
-        self.setLongeurDuTrajet(longeurDuTrajet)
+        self.definirLongueurDuTrajet(longeurDuTrajet)
 
         print("input temps d'embarquement: ")
         tempsEmbarquement = float(input())
-        self.setTempsEmbarquement(tempsEmbarquement)
+        self.definirTempsEmbarquement(tempsEmbarquement)
 
         print("input temps de débarquement: ")
         tempsDebarquement = float(input())
-        self.setTempsDebarquement(tempsDebarquement)
+        self.definirTempsDebarquement(tempsDebarquement)
 
         print("input nombre de personnes par chaise: ")
         nombreDePersonnesParChaise = int(input())
-        self.setNombreDePersonnesParChaise(nombreDePersonnesParChaise)
+        self.definirNombreDePersonnesParChaise(nombreDePersonnesParChaise)
 
         print(self)
         print(f"Nombre de personnes par heure: {self.calculerNombreDePersonnesParHeure()}")
@@ -197,12 +197,12 @@ class Chairlift:
         return f"Vitesse: {self.__vitesse}, Nombre de chaises: {self.__nombreDeChaise}, Longueur du trajet: {self.__longeurDuTrajet}, Temps d'embarquement: {self.__tempsEmbarquement}, Temps de débarquement: {self.__tempsDebarquement}, Nombre de personnes par chaise: {self.__nombreDePersonnesParChaise}, Temps de trajet: {self.calculerTempsTrajet()}, Temps de monter: {self.calculerTempsDeMonter()}, Temps de cycle: {self.calculerTempsDeCycle()}"
 
 #mon_chairlift = Chairlift()
-#mon_chairlift.test()
-#mon_chairlift.setParametreObserver("vitesse")
-#mon_chairlift.getGraphData(11,0,10)
+#mon_chairlift.tester()
+#mon_chairlift.definirParametreObserver("vitesse")
+#mon_chairlift.obtenirDonneesGraphique(11,0,10)
 #path = filedialog.asksaveasfilename(defaultextension=".csv",
                                     #filetypes=[("Fichiers CSV", "*.csv")])
 #if path:
-    #self.chairlift.exportToCSV(path)
-#mon_chairlift.exportToCSV("parametres.csv")
-#mon_chairlift.importFromCSV("parametres.csv")
+    #self.chairlift.exporterVersCSV(path)
+#mon_chairlift.exporterVersCSV("parametres.csv")
+#mon_chairlift.importerDepuisCSV("parametres.csv")

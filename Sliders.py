@@ -142,7 +142,7 @@ class Sliders(ctk.CTkFrame) :
         self.text_cable.configure(text=str(self.taille_cable) + " m")
 
         # Donner cette valeur à l'instance de la classe Chairlift qui gère les calculs avec cette valeur
-        if self.chairlift.setLongeurDuTrajet(valeur) :
+        if self.chairlift.definirLongueurDuTrajet(valeur) :
             print("chairlift cable modifié")
         else :
             print("erreur de limite")
@@ -153,7 +153,7 @@ class Sliders(ctk.CTkFrame) :
         self.nb_chaise = int(valeur)
         self.text_chaise.configure(text=str(self.nb_chaise))
     
-        if self.chairlift.setNombreDeChaise(valeur) :
+        if self.chairlift.definirNombreDeChaise(valeur) :
             print("chairlift chaise modifié")
         else :
             print("erreur de limite??")
@@ -163,7 +163,7 @@ class Sliders(ctk.CTkFrame) :
         self.vitesse = round(float(valeur), 1)
         self.text_vitesse.configure(text=str(self.vitesse) + " m/s")
     
-        if self.chairlift.setVitesse(valeur) :
+        if self.chairlift.definirVitesse(valeur) :
             print("chairlift vitesse modifié")
         else :
             print("erreur de limite??")
@@ -173,7 +173,7 @@ class Sliders(ctk.CTkFrame) :
         self.temps_embarquement = int(valeur)
         self.text_embarque.configure(text=str(self.temps_embarquement) + " s")
     
-        if self.chairlift.setTempsEmbarquement(valeur) :
+        if self.chairlift.definirTempsEmbarquement(valeur) :
             print("chairlift embarquement modifié")
         else :
             print("erreur de limite??")
@@ -183,7 +183,7 @@ class Sliders(ctk.CTkFrame) :
         self.temps_debarquement = int(valeur)
         self.text_debarque.configure(text=str(self.temps_debarquement) + " s")
     
-        if self.chairlift.setTempsDebarquement(valeur) :
+        if self.chairlift.definirTempsDebarquement(valeur) :
             print("chairlift débarquement modifié")
         else :
             print("erreur de limite??")
@@ -193,7 +193,7 @@ class Sliders(ctk.CTkFrame) :
         self.capacite_chaise = int(valeur)
         self.text_capacite.configure(text=str(self.capacite_chaise))
     
-        if self.chairlift.setNombreDePersonnesParChaise(valeur) :
+        if self.chairlift.definirNombreDePersonnesParChaise(valeur) :
             print("chairlift capacité modifié")
         else :
             print("erreur de limite??")
@@ -213,7 +213,7 @@ class Sliders(ctk.CTkFrame) :
         self.slider_cable.configure(state="disabled" if selection == 1 else "normal")
 
         # appeler le setter du paramètre observé quand la case est choisie
-        resultat1 =  self.chairlift.setParametreObserver("longeurDuTrajet") if selection == 1 else True
+        resultat1 =  self.chairlift.definirParametreObserver("longeurDuTrajet") if selection == 1 else True
 
         # Vérifier la sélection et mettre à jour le graph
         if selection == 1  and resultat1 :
@@ -225,7 +225,7 @@ class Sliders(ctk.CTkFrame) :
         """NOMBRE DE CHAISES"""
         self.slider_chaise.configure(state="disabled" if selection == 2 else "normal")
     
-        resultat2 = self.chairlift.setParametreObserver("nombreDeChaise") if selection == 2 else True
+        resultat2 = self.chairlift.definirParametreObserver("nombreDeChaise") if selection == 2 else True
         if selection == 2 and resultat2 :
             print("Graph nombre chaise dans la bonne place")
             self.mise_a_jour()
@@ -235,7 +235,7 @@ class Sliders(ctk.CTkFrame) :
         """VITESSE"""
         self.slider_vitesse.configure(state="disabled" if selection == 3 else "normal")
     
-        resultat3 = self.chairlift.setParametreObserver("vitesse") if selection == 3 else True
+        resultat3 = self.chairlift.definirParametreObserver("vitesse") if selection == 3 else True
         if selection == 3 and resultat3:
             print("Graph vitesse dans la bonne place")
             self.mise_a_jour()
@@ -244,7 +244,7 @@ class Sliders(ctk.CTkFrame) :
     
         """TEMPS EMBARQUEMENT"""
         self.slider_embarque.configure(state="disabled" if selection == 4 else "normal")
-        resultat4 = self.chairlift.setParametreObserver("tempsEmbarquement") if selection == 4 else True
+        resultat4 = self.chairlift.definirParametreObserver("tempsEmbarquement") if selection == 4 else True
         if selection == 4 and  resultat4:
             print("Graph temps embarquement dans la bonne place")
             self.mise_a_jour()
@@ -253,7 +253,7 @@ class Sliders(ctk.CTkFrame) :
     
         """TEMPS DEBARQUEMENT"""
         self.slider_debarque.configure(state="disabled" if selection == 5 else "normal")
-        resultat5 = self.chairlift.setParametreObserver("tempsDebarquement") if selection == 5 else True
+        resultat5 = self.chairlift.definirParametreObserver("tempsDebarquement") if selection == 5 else True
         if selection == 5 and resultat5 :
             print("Graph temps debarquement dans la bonne place")
             self.mise_a_jour()
@@ -262,7 +262,7 @@ class Sliders(ctk.CTkFrame) :
     
         """CAPACITÉ CHAISE"""
         self.slider_capacite.configure(state="disabled" if selection == 6 else "normal")
-        resultat6 = self.chairlift.setParametreObserver("nombreDePersonnesParChaise") if selection == 6 else True
+        resultat6 = self.chairlift.definirParametreObserver("nombreDePersonnesParChaise") if selection == 6 else True
         if selection == 6 and resultat6 :
             print("Graph capacité dans la bonne place")
             self.mise_a_jour()
@@ -277,14 +277,14 @@ class Sliders(ctk.CTkFrame) :
         path = filedialog.askopenfilename(defaultextension=".csv",
         filetypes=[("Fichiers CSV", "*.csv")])
         if path:
-            self.chairlift.importFromCSV(path)
+            self.chairlift.importerDepuisCSV(path)
         print("Bouton importer")
 
     def _quand_exporter(self) :
         path = filedialog.asksaveasfilename(defaultextension=".csv",
         filetypes=[("Fichiers CSV", "*.csv")])
         if path:
-            self.chairlift.exportToCSV(path)
+            self.chairlift.exporterVersCSV(path)
         print("Bouton exporter")
 
     
