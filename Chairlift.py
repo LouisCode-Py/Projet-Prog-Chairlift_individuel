@@ -5,16 +5,16 @@ import csv
 
 class Chairlift:
     def __init__(self):
-        self.__vitesse = 0
+        self.__vitesse = 0 # m/s
         self.__nombreDeChaise = 0
         self.__nombreDePersonnesParChaise = 0
-        self.__longueurDuTrajet = 0
-        self.__tempsEmbarquement = 0
-        self.__tempsDebarquement = 0
+        self.__longueurDuTrajet = 0 # m
+        self.__tempsEmbarquement = 0 # s
+        self.__tempsDebarquement = 0 # s
 
         self.__parametreObserver = "none"
 
-
+    #setter pour la vitesse de deplacement du chairlift
     def definirVitesse(self, vitesse):
         if vitesse >= 0:
             self.__vitesse = vitesse
@@ -22,13 +22,14 @@ class Chairlift:
         else:
             return False
 
-    def definirNombreDeChaise(self,nombreDeChaise):
+    #setter pour le nombre de chaises du chairlift
+    def definirNombreDeChaise(self, nombreDeChaise):
         if nombreDeChaise >= 0:
             self.__nombreDeChaise = nombreDeChaise
             return True
         else:
             return False
-
+    #setter pour la longueur du trajet du chairlift
     def definirLongueurDuTrajet(self, longueurDuTrajet):
         if longueurDuTrajet > 0:
             self.__longueurDuTrajet = longueurDuTrajet
@@ -36,27 +37,29 @@ class Chairlift:
         else:
             return False
 
+    #setter pour le temps d'embarquement du chairlift
     def definirTempsEmbarquement(self, tempsEmbarquement):
         if tempsEmbarquement >= 0:
             self.__tempsEmbarquement = tempsEmbarquement
             return True
         else:
             return False
-
-    def definirTempsDebarquement(self,tempsDebarquement):
+    #setter pour le temps de débarquement du chairlift
+    def definirTempsDebarquement(self, tempsDebarquement):
         if tempsDebarquement >= 0:
             self.__tempsDebarquement = tempsDebarquement
             return True
         else:
             return False
 
+    #setter pour le nombre de personnes par chaise du chairlift
     def definirNombreDePersonnesParChaise(self, nombreDePersonnesParChaise):
         if nombreDePersonnesParChaise >= 0:
             self.__nombreDePersonnesParChaise = nombreDePersonnesParChaise
             return True
         else:
             return False
-        
+    #setter pour le parametre observer du chairlift    
     def definirParametreObserver(self, parametreObserver):
         if parametreObserver in ["vitesse", "nombreDeChaise", "longueurDuTrajet", "tempsEmbarquement", "tempsDebarquement", "nombreDePersonnesParChaise", "none"]:
             self.__parametreObserver = parametreObserver
@@ -64,13 +67,14 @@ class Chairlift:
         else:
             return False
 
+    #calculer le temps de trajet du chairlift
     def calculerTempsTrajet(self):
         if self.__vitesse == 0:
             return 0
         tempsTrajet = self.__longueurDuTrajet / self.__vitesse
         return tempsTrajet
     
-
+    #calculer le temps de cycle pour une chaise du chairlift, qui est le temps de trajet aller-retour plus le temps d'embarquement et de débarquement
     def calculerTempsDeCycle(self):
         tempsTrajet = self.calculerTempsTrajet()
         if tempsTrajet == 0:
@@ -78,6 +82,7 @@ class Chairlift:
         tempsDeCycle = 2*tempsTrajet + self.__tempsEmbarquement + self.__tempsDebarquement
         return tempsDeCycle
 
+    #calculer le nombre de personnes par heure du chairlift, qui est le nombre de personnes transportées par heure en fonction du temps de cycle et du nombre de chaises et de personnes par chaise
     def calculerNombreDePersonnesParHeure(self):
         tempsDeCycle = self.calculerTempsDeCycle()
         if tempsDeCycle == 0:
@@ -85,8 +90,9 @@ class Chairlift:
             return 0
         nombreDePersonnesParHeure = (3600 / tempsDeCycle) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise
         print(nombreDePersonnesParHeure)
-        return int(nombreDePersonnesParHeure)
-    
+        return int(nombreDePersonnesParHeure) #client/heure
+
+    #calculer le nombre de personnes par heure en fonction du parametre observer et de la valeur du parametre manquant. Utile pour la generation de graphique. Le parametre observer est celui qui est modifie dans le graphique.
     def calculerNombreDePersonnesParametreManquant(self, valeurParametre):
         try:
             if self.__parametreObserver == "vitesse":
@@ -112,6 +118,7 @@ class Chairlift:
         except (ZeroDivisionError, TypeError, ValueError, OverflowError):
             return 0
 
+    #retourne les donnees pour le graphique en fonction du parametre observer et de la resolution, minimum et maximum du parametre observer. Utile pour la generation de graphique.
     def obtenirDonneesGraphique(self, resolution, minimum, maximum):
         abscisses = np.linspace(minimum, maximum, num=resolution)
         ordonnees = np.array([
@@ -121,9 +128,11 @@ class Chairlift:
     
         return np.column_stack((abscisses, ordonnees))
 
+    #getter pour le parametre observer du chairlift
     def obtenirParametreObserver(self):
         return self.__parametreObserver
-    
+
+    #exporter les parametres du chairlift vers un fichier CSV
     def exporterVersCSV(self, chemin):
         ligne = [
             ("vitesse", self.__vitesse),
@@ -140,7 +149,7 @@ class Chairlift:
             redacteur.writerow(["Parametre", "Valeur"])   # en-tête
             redacteur.writerows(ligne)
 
-
+    #importer les parametres du chairlift depuis un fichier CSV
     def importerDepuisCSV(self, chemin):
         try:
             definisseurs = {
@@ -164,6 +173,7 @@ class Chairlift:
         except (OSError, ValueError, KeyError) as error:
             print("Chargement impossible :", error)
 
+    #test de la classe
     def tester(self):
         print("input vitesse: ")
         vitesse = float(input())
@@ -192,7 +202,7 @@ class Chairlift:
         print(self)
         print(f"Nombre de personnes par heure: {self.calculerNombreDePersonnesParHeure()}")
 
-
+    #utile pour le debug, permet d'afficher les parametres du chairlift et les resultats des calculs
     def __str__(self):
         return f"Vitesse: {self.__vitesse}, Nombre de chaises: {self.__nombreDeChaise}, Longueur du trajet: {self.__longueurDuTrajet}, Temps d'embarquement: {self.__tempsEmbarquement}, Temps de débarquement: {self.__tempsDebarquement}, Nombre de personnes par chaise: {self.__nombreDePersonnesParChaise}, Temps de trajet: {self.calculerTempsTrajet()}, Temps de monter: {self.calculerTempsDeMonter()}, Temps de cycle: {self.calculerTempsDeCycle()}"
 
