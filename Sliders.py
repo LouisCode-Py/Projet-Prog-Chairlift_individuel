@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import IntVar
+from tkinter import IntVar, filedialog
 
 # Constante des paddings pour les widgets de chaque paramètre
 PADDING_EN_Y = 30
@@ -272,12 +272,19 @@ class Sliders(ctk.CTkFrame) :
     
     # Fonctions appelées lors de l'appui des boutons d'import et d'export
     def _quand_importer(self) :
-        #TODO ajouter le bon PATH a la fonction de Chairlift???? 
-        self.chairlift.importFromCSV()
+    
+        
+        path = filedialog.askopenfilename(defaultextension=".csv",
+        filetypes=[("Fichiers CSV", "*.csv")])
+        if path:
+            self.chairlift.importFromCSV(path)
         print("Bouton importer")
 
     def _quand_exporter(self) :
-        self.chairlift.exportToCSV()
+        path = filedialog.asksaveasfilename(defaultextension=".csv",
+        filetypes=[("Fichiers CSV", "*.csv")])
+        if path:
+            self.chairlift.exportToCSV(path)
         print("Bouton exporter")
 
     
