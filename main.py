@@ -18,8 +18,7 @@ class MainApp(ctk.CTk) :
         # Initialiser la frame des sliders et autres boutons
         self.grid_rowconfigure(0, weight=1)
         self.sliders = Sliders(self, self.__chairlift, self.mettre_a_jour)
-        self.sliders.grid(row=0, column=0, rowspan=3, #sticky="nsew",
-                           padx=12, pady=12)
+        self.sliders.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=12, pady=12)
 
         # Initialiser la frame du Graphique
         self.graph = GraphControl(self, self.__chairlift)
@@ -33,8 +32,12 @@ class MainApp(ctk.CTk) :
         self.bouton_rafraichissement.grid(row=2, column=1, sticky="nsew", padx=12, pady=(3,12))
 
         # Modifier le poids des différentes colonnes
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=2)
+        self.grid_columnconfigure(0, weight=0)
+        self.grid_columnconfigure(1, weight=1)
+        #Configurer les rows du grid
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=0)
+        self.grid_rowconfigure(2, weight=0)
 
         # Appeler mettre à jour qui met à jour l'image/le graph
         self.mettre_a_jour()
