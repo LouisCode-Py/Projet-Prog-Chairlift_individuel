@@ -18,14 +18,18 @@ class MainApp(ctk.CTk) :
         # Initialiser la frame des sliders et autres boutons
         self.grid_rowconfigure(0, weight=1)
         self.sliders = Sliders(self, self.__chairlift, self.mettre_a_jour)
-        self.sliders.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=12, pady=12)
+        self.sliders.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=12, pady=12)
 
         # Initialiser la frame du Graphique
         self.graph = GraphControl(self, self.__chairlift)
         self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
         # Affichage du label du nombre de personne par heure avec les paramètres courants.
-        ctk.CTkLabel(self, bg_color="green", text="Nombre de personnes par heure :" + str(self.__chairlift.calculerNombreDePersonnesParHeure())).grid(row=1, column=1, sticky="nsew", padx=12, pady=12)
+        self.label_nb_personne = ctk.CTkLabel(self, bg_color="white", text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()), text_color="black")
+        self.label_nb_personne.grid(row=1, column=1, sticky="nsew", padx=10, pady=(0,12))
+        # Bouton de rafraichissement
+        self.bouton_rafraichissement = ctk.CTkButton(self, text="Recalculer", command=self._rafraichissement)
+        self.bouton_rafraichissement.grid(row=2, column=1, sticky="nsew", padx=12, pady=(3,12))
 
         # Modifier le poids des différentes colonnes
         self.grid_columnconfigure(0, weight=1)
@@ -36,13 +40,18 @@ class MainApp(ctk.CTk) :
 
     # mettre à jour le graphique 
     def mettre_a_jour(self):
-        #TODO regler le edge case de aucun paramètre observé, c'est juste vide 
         self.graph.mise_a_jour_image()
 
+    # Commande du bouton de rafraichissement qui recalcul et déselectionne
+    def _rafraichissement(self) :
+        self.sliders.reset_radio_var()
+        self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
+
+#TODO il a un "print(fuck)" en qq part...???
 
 if __name__ == "__main__" :
-    ctk.set_appearance_mode("System")
+    ctk.set_appearance_mode("system")
     ctk.set_default_color_theme("green")
     application = MainApp()
     application.mainloop()

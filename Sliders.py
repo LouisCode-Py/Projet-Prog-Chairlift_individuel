@@ -5,6 +5,15 @@ from tkinter import IntVar, filedialog
 PADDING_EN_Y = 30
 PADDING_EN_X = 10
 
+"""LEGENDE radio var et ordre des sliders"""
+"------------------------------------------"
+"Longueur cable :     1"
+"Nombre chaise :      2"
+"Vitesse :            3"
+"Temps embarquement : 4"
+"Temps debarquement : 5"
+"Capacite chaise :    6"
+
 class Sliders(ctk.CTkFrame) :
 
     def __init__(self, parent, chairlift, sur_mise_a_jour) :
@@ -24,7 +33,6 @@ class Sliders(ctk.CTkFrame) :
         self.bouton_importer.grid(row=6, column=0, padx=PADDING_EN_X, pady=20)
         self.bouton_exporter = ctk.CTkButton(self, text="Exporter un CSV", command=self._quand_exporter)
         self.bouton_exporter.grid(row=6, column=1, padx=PADDING_EN_X, pady=20)
-        
 
         # initialiser la variable pour les "radiobutton", empêche que plusieurs soient cochés
         self.radio_var = IntVar(value=0)
@@ -87,8 +95,8 @@ class Sliders(ctk.CTkFrame) :
         self.text_vitesse = ctk.CTkLabel(self, text="0" + " m/s")
         self.text_vitesse.grid(row=2, column=2, sticky="ew", padx=PADDING_EN_X, pady=PADDING_EN_Y)
         
-        self.case_cable = ctk.CTkRadioButton(self, text="", command=self._actualiser_slider, variable=self.radio_var, value=3)
-        self.case_cable.grid(row=2, column=3, sticky="e")
+        self.case_vitesse = ctk.CTkRadioButton(self, text="", command=self._actualiser_slider, variable=self.radio_var, value=3)
+        self.case_vitesse.grid(row=2, column=3, sticky="e")
 
     def creer_widgets_embarque(self) :
         ctk.CTkLabel(self, text="Temps d'embarquement").grid(row=3, column=0, sticky="w", padx=PADDING_EN_X, pady=PADDING_EN_Y)
@@ -204,7 +212,7 @@ class Sliders(ctk.CTkFrame) :
         # Aller chercher la valeur de radio_var pour déterminer ce qui est sélectionné
         selection = self.radio_var.get()
     
-        if selection == 0 : 
+        if selection == 0 :
             print("Aucun paramètre observé")
     
         """LONGUEUR CABLE"""
@@ -272,8 +280,6 @@ class Sliders(ctk.CTkFrame) :
     
     # Fonctions appelées lors de l'appui des boutons d'import et d'export
     def _quand_importer(self) :
-    
-        
         chemin = filedialog.askopenfilename(defaultextension=".csv",
         filetypes=[("Fichiers CSV", "*.csv")])
         if chemin:
@@ -286,7 +292,35 @@ class Sliders(ctk.CTkFrame) :
         if chemin:
             self.chairlift.exporterVersCSV(chemin)
         print("Bouton exporter")
-
+    
+    def reset_radio_var(self) :
+        """
+        case_selectionne = self.radio_var.get()
+        if case_selectionne == 1:
+            self.case_cable.deselect()
+            self.slider_cable.configure(state="normal")
+        if case_selectionne == 6:
+            self.case_capacite.deselect()
+            self.slider_capacite.configure(state="normal")
+        if case_selectionne == 2:
+            self.case_chaise.deselect()
+            self.slider_chaise.configure(state="normal")
+        if case_selectionne == 5:
+            self.case_debarque.deselect()
+            self.slider_debarque.configure(state="normal")
+        if case_selectionne == 4:
+            self.case_embarque.deselect()
+            self.slider_embarque.configure(state="normal")
+        if case_selectionne == 3:
+            self.case_vitesse.deselect()
+            self.slider_vitesse.configure(state="normal")
+        else :
+            print("Aucun paramètre à déselectionner")
+        """
+        self.radio_var.set(0)
+        self._actualiser_slider()
+        self.chairlift.definirParametreObserver("none")
+        self.mise_a_jour()
     
 
 #TODO les set des sliders doivent se fier au csv ou bien 0 si pas d'importé (voir lignes 23 et 19 où c'est = à 0) ex ligne 53
