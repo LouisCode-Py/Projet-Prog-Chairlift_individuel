@@ -153,13 +153,13 @@ class Chairlift:
     #exporter les parametres du chairlift vers un fichier CSV
     def exporterVersCSV(self, chemin):
         ligne = [
-            ("vitesse", self.__vitesse),
-            ("nombreDeChaise", self.__nombreDeChaise),
-            ("nombreDePersonnesParChaise", self.__nombreDePersonnesParChaise),
-            ("longueurDuTrajet", self.__longueurDuTrajet),
-            ("tempsEmbarquement", self.__tempsEmbarquement),
-            ("tempsDebarquement", self.__tempsDebarquement),
-            ("parametreObserver", self.__parametreObserver),
+            ("vitesse", round(float(self.__vitesse), 1)),
+            ("nombreDeChaise", int(self.__nombreDeChaise)),
+            ("nombreDePersonnesParChaise", int(self.__nombreDePersonnesParChaise)),
+            ("longueurDuTrajet", int(self.__longueurDuTrajet)),
+            ("tempsEmbarquement", int(self.__tempsEmbarquement)),
+            ("tempsDebarquement", int(self.__tempsDebarquement))    ,
+            ("parametreObserver", int(self.__parametreObserver)),
         ]
 
         with open(chemin, "w", newline="", encoding="utf-8") as fichier:
