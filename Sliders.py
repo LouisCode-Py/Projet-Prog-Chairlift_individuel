@@ -284,6 +284,7 @@ class Sliders(ctk.CTkFrame) :
         filetypes=[("Fichiers CSV", "*.csv")])
         if chemin:
             self.chairlift.importerDepuisCSV(chemin)
+        self.appliquer_val_sliders()
         print("Bouton importer")
 
     def _quand_exporter(self) :
@@ -294,34 +295,33 @@ class Sliders(ctk.CTkFrame) :
         print("Bouton exporter")
     
     def reset_radio_var(self) :
-        """
-        case_selectionne = self.radio_var.get()
-        if case_selectionne == 1:
-            self.case_cable.deselect()
-            self.slider_cable.configure(state="normal")
-        if case_selectionne == 6:
-            self.case_capacite.deselect()
-            self.slider_capacite.configure(state="normal")
-        if case_selectionne == 2:
-            self.case_chaise.deselect()
-            self.slider_chaise.configure(state="normal")
-        if case_selectionne == 5:
-            self.case_debarque.deselect()
-            self.slider_debarque.configure(state="normal")
-        if case_selectionne == 4:
-            self.case_embarque.deselect()
-            self.slider_embarque.configure(state="normal")
-        if case_selectionne == 3:
-            self.case_vitesse.deselect()
-            self.slider_vitesse.configure(state="normal")
-        else :
-            print("Aucun paramètre à déselectionner")
-        """
         self.radio_var.set(0)
         self._actualiser_slider()
         self.chairlift.definirParametreObserver("none")
         self.mise_a_jour()
-    
+
+    def appliquer_val_sliders(self) :
+        #TODO ajouter le getter
+        self.slider_cable.set(self.chairlift.obtenirLongueurDuTrajet())
+        self.text_cable.configure(text=str(self.chairlift.obtenirLongueurDuTrajet()))
+
+        self.slider_capacite.set(self.chairlift.obtenirNombreDePersonnesParChaise())
+        self.text_capacite.configure(text=str(self.chairlift.obtenirNombreDePersonnesParChaise()))
+
+        self.slider_chaise.set(self.chairlift.obtenirNombreDeChaise())
+        self.text_chaise.configure(text=str(self.chairlift.obtenirNombreDeChaise()))
+
+        self.slider_debarque.set(self.chairlift.obtenirTempsDebarquement())
+        self.text_debarque.configure(text=str(self.chairlift.obtenirTempsDebarquement()))
+
+        self.slider_embarque.set(self.chairlift.obtenirTempsEmbarquement())
+        self.text_embarque.configure(text=str(self.chairlift.obtenirTempsEmbarquement()))
+        
+        self.slider_vitesse.set(self.chairlift.obtenirVitesse())
+        self.text_vitesse.configure(text=str(self.chairlift.obtenirVitesse()))
+        
+        
+        
 
 #TODO les set des sliders doivent se fier au csv ou bien 0 si pas d'importé (voir lignes 23 et 19 où c'est = à 0) ex ligne 53
 #TODO enlever les prints des if de setters...
