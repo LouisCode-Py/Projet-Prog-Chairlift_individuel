@@ -144,67 +144,51 @@ class Sliders(ctk.CTkFrame) :
     # Les suivantes sont appelés lorsque leurs sliders respectifs changent de valeurs
     # Le fonctionnement de celles-ci est identique dépendant des paramètres, l'explication est donc seulement fait une fois.
     def _quand_slider_cable(self, valeur) :
-        # Initialiser la valeur du paramètre en tant que tel.
-        self.taille_cable = int(valeur)
-        # Mettre le bon chiffre dans le texte du slider, dépendant de la valeur courante
-        self.text_cable.configure(text=str(self.taille_cable) + " m")
-
-        # Donner cette valeur à l'instance de la classe Chairlift qui gère les calculs avec cette valeur
-        if self.chairlift.definirLongueurDuTrajet(valeur) :
-            print("chairlift cable modifié")
-        else :
+        if not self.chairlift.definirLongueurDuTrajet(valeur) :
             print("erreur de limite")
-        # Mettre à jour le graphique et calculs, etc. (voir cette fonction)
+        self.text_cable.configure(
+            text=str(self.chairlift.obtenirLongueurDuTrajet()) + " m"
+        )
         self.mise_a_jour()
     
     def _quand_slider_chaise(self, valeur) :
-        self.nb_chaise = int(valeur)
-        self.text_chaise.configure(text=str(self.nb_chaise))
-    
-        if self.chairlift.definirNombreDeChaise(valeur) :
-            print("chairlift chaise modifié")
-        else :
+        if not self.chairlift.definirNombreDeChaise(valeur) :
             print("erreur de limite??")
+        self.text_chaise.configure(
+            text=str(self.chairlift.obtenirNombreDeChaise())
+        )
         self.mise_a_jour()
     
     def _quand_slider_vitesse(self, valeur) :
-        self.vitesse = round(float(valeur), 1)
-        self.text_vitesse.configure(text=str(self.vitesse) + " m/s")
-    
-        if self.chairlift.definirVitesse(valeur) :
-            print("chairlift vitesse modifié")
-        else :
+        if not self.chairlift.definirVitesse(valeur) :
             print("erreur de limite??")
+        self.text_vitesse.configure(
+            text=str(self.chairlift.obtenirVitesse()) + " m/s"
+        )
         self.mise_a_jour()
     
     def _quand_slider_embarque(self, valeur) :
-        self.temps_embarquement = int(valeur)
-        self.text_embarque.configure(text=str(self.temps_embarquement) + " s")
-    
-        if self.chairlift.definirTempsEmbarquement(valeur) :
-            print("chairlift embarquement modifié")
-        else :
+        if not self.chairlift.definirTempsEmbarquement(valeur) :
             print("erreur de limite??")
+        self.text_embarque.configure(
+            text=str(self.chairlift.obtenirTempsEmbarquement()) + " s"
+        )
         self.mise_a_jour()
     
     def _quand_slider_debarque(self, valeur) :
-        self.temps_debarquement = int(valeur)
-        self.text_debarque.configure(text=str(self.temps_debarquement) + " s")
-    
-        if self.chairlift.definirTempsDebarquement(valeur) :
-            print("chairlift débarquement modifié")
-        else :
+        if not self.chairlift.definirTempsDebarquement(valeur) :
             print("erreur de limite??")
+        self.text_debarque.configure(
+            text=str(self.chairlift.obtenirTempsDebarquement()) + " s"
+        )
         self.mise_a_jour()
     
     def _quand_slider_capacite(self, valeur) :
-        self.capacite_chaise = int(valeur)
-        self.text_capacite.configure(text=str(self.capacite_chaise))
-    
-        if self.chairlift.definirNombreDePersonnesParChaise(valeur) :
-            print("chairlift capacité modifié")
-        else :
+        if not self.chairlift.definirNombreDePersonnesParChaise(valeur) :
             print("erreur de limite??")
+        self.text_capacite.configure(
+            text=str(self.chairlift.obtenirNombreDePersonnesParChaise())
+        )
         self.mise_a_jour()
     
     
