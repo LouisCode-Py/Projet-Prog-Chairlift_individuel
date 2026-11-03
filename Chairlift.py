@@ -173,9 +173,9 @@ class Chairlift:
                 "vitesse": (self.definirVitesse, float),
                 "nombreDeChaise": (self.definirNombreDeChaise, int),
                 "nombreDePersonnesParChaise": (self.definirNombreDePersonnesParChaise, int),
-                "longueurDuTrajet": (self.definirLongueurDuTrajet, float),
-                "tempsEmbarquement": (self.definirTempsEmbarquement, float),
-                "tempsDebarquement": (self.definirTempsDebarquement, float),
+                "longueurDuTrajet": (self.definirLongueurDuTrajet, int),
+                "tempsEmbarquement": (self.definirTempsEmbarquement, int),
+                "tempsDebarquement": (self.definirTempsDebarquement, int),
             }
 
             with open(chemin, newline="", encoding="utf-8") as fichier:
