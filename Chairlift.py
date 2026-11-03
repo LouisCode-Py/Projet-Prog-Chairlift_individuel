@@ -68,22 +68,22 @@ class Chairlift:
             return False
 
     def obtenirVitesse(self):
-        return self.__vitesse
+        return round(float(self.__vitesse), 1)
 
     def obtenirNombreDeChaise(self):
-        return self.__nombreDeChaise
+        return int(self.__nombreDeChaise)
 
     def obtenirNombreDePersonnesParChaise(self):
-        return self.__nombreDePersonnesParChaise
+        return int(self.__nombreDePersonnesParChaise)
 
     def obtenirLongueurDuTrajet(self):
-        return self.__longueurDuTrajet
+        return int(self.__longueurDuTrajet)
 
     def obtenirTempsEmbarquement(self):
-        return self.__tempsEmbarquement
+        return int(self.__tempsEmbarquement)
 
     def obtenirTempsDebarquement(self):
-        return self.__tempsDebarquement  
+        return int(self.__tempsDebarquement)
 
     #calculer le temps de trajet du chairlift
     def calculerTempsTrajet(self):
