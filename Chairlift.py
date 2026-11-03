@@ -158,8 +158,7 @@ class Chairlift:
             ("nombreDePersonnesParChaise", int(self.__nombreDePersonnesParChaise)),
             ("longueurDuTrajet", int(self.__longueurDuTrajet)),
             ("tempsEmbarquement", int(self.__tempsEmbarquement)),
-            ("tempsDebarquement", int(self.__tempsDebarquement))    ,
-            ("parametreObserver", int(self.__parametreObserver)),
+            ("tempsDebarquement", int(self.__tempsDebarquement)),
         ]
 
         with open(chemin, "w", newline="", encoding="utf-8") as fichier:
@@ -177,7 +176,6 @@ class Chairlift:
                 "longueurDuTrajet": (self.definirLongueurDuTrajet, float),
                 "tempsEmbarquement": (self.definirTempsEmbarquement, float),
                 "tempsDebarquement": (self.definirTempsDebarquement, float),
-                "parametreObserver": (self.definirParametreObserver, str),
             }
 
             with open(chemin, newline="", encoding="utf-8") as fichier:
