@@ -300,8 +300,8 @@ class Sliders(ctk.CTkFrame) :
         self.chairlift.definirParametreObserver("none")
         self.mise_a_jour()
 
+    # Modifier les valeurs de des sliders pour qu'ils correspondent bien à celles importées
     def appliquer_val_sliders(self) :
-        #TODO ajouter le getter
         self.slider_cable.set(self.chairlift.obtenirLongueurDuTrajet())
         self.text_cable.configure(text=str(self.chairlift.obtenirLongueurDuTrajet()))
 
@@ -320,8 +320,3 @@ class Sliders(ctk.CTkFrame) :
         self.slider_vitesse.set(self.chairlift.obtenirVitesse())
         self.text_vitesse.configure(text=str(self.chairlift.obtenirVitesse()))
         
-        
-        
-
-#TODO les set des sliders doivent se fier au csv ou bien 0 si pas d'importé (voir lignes 23 et 19 où c'est = à 0) ex ligne 53
-#TODO enlever les prints des if de setters...
