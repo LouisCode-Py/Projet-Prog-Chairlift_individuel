@@ -32,8 +32,12 @@ class MainApp(ctk.CTk) :
         self.bouton_rafraichissement.grid(row=2, column=1, sticky="nsew", padx=12, pady=(3,12))
 
         # Modifier le poids des différentes colonnes
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=2)
+        self.grid_columnconfigure(0, weight=0)
+        self.grid_columnconfigure(1, weight=1)
+        #Configurer les rows du grid
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=0)
+        self.grid_rowconfigure(2, weight=0)
 
         # Appeler mettre à jour qui met à jour l'image/le graph
         self.mettre_a_jour()
@@ -47,9 +51,7 @@ class MainApp(ctk.CTk) :
         self.sliders.reset_radio_var()
         self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
-
-#TODO il a un "print(fuck)" en qq part...???
-
+#Loop du MainApp et choix de l'apparence du ctk
 if __name__ == "__main__" :
     ctk.set_appearance_mode("system")
     ctk.set_default_color_theme("green")

@@ -59,14 +59,14 @@ class Chairlift:
             return True
         else:
             return False
-    #setter pour le parametre observer du chairlift    
+    #setter pour le paramètre observé du chairlift    
     def definirParametreObserver(self, parametreObserver):
         if parametreObserver in ["vitesse", "nombreDeChaise", "longueurDuTrajet", "tempsEmbarquement", "tempsDebarquement", "nombreDePersonnesParChaise", "none"]:
             self.__parametreObserver = parametreObserver
             return True
         else:
             return False
-
+    # Getters des différents paramètres, convertis dans le bon type
     def obtenirVitesse(self):
         return round(float(self.__vitesse), 1)
 
@@ -100,7 +100,7 @@ class Chairlift:
         tempsDeCycle = 2*tempsTrajet + self.__tempsEmbarquement + self.__tempsDebarquement
         return tempsDeCycle
 
-    #calculer le nombre de personnes par heure du chairlift, qui est le nombre de personnes transportées par heure en fonction du temps de cycle et du nombre de chaises et de personnes par chaise
+    #calculer le nombre de personnes par heure du chairlift, qui est le nombre de personnes transportées par heure en fonction du temps de cycle, du nombre de chaises et de personnes par chaise
     def calculerNombreDePersonnesParHeure(self):
         tempsDeCycle = self.calculerTempsDeCycle()
         if tempsDeCycle == 0:
@@ -109,7 +109,7 @@ class Chairlift:
         print(nombreDePersonnesParHeure)
         return int(nombreDePersonnesParHeure) #client/heure
 
-    #calculer le nombre de personnes par heure en fonction du parametre observer et de la valeur du parametre manquant. Utile pour la generation de graphique. Le parametre observer est celui qui est modifie dans le graphique.
+    #calculer le nombre de personnes par heure en fonction du paramètre observé et de la valeur du paramètre manquant. Utile pour la génération de graphique. Le paramètre observé est celui qui est modifié dans le graphique.
     def calculerNombreDePersonnesParametreManquant(self, valeurParametre):
         try:
             if self.__parametreObserver == "vitesse":
@@ -135,7 +135,7 @@ class Chairlift:
         except (ZeroDivisionError, TypeError, ValueError, OverflowError):
             return 0
 
-    #retourne les donnees pour le graphique en fonction du parametre observer et de la resolution, minimum et maximum du parametre observer. Utile pour la generation de graphique.
+    #retourne les données pour le graphique en fonction du paramètre observé et de la résolution, minimum et maximum du paramètre observé. Utile pour la génération de graphique.
     def obtenirDonneesGraphique(self, resolution, minimum, maximum):
         abscisses = np.linspace(minimum, maximum, num=resolution)
         ordonnees = np.array([
@@ -145,11 +145,11 @@ class Chairlift:
     
         return np.column_stack((abscisses, ordonnees))
 
-    #getter pour le parametre observer du chairlift
+    #getter pour le paramètre observé du chairlift
     def obtenirParametreObserver(self):
         return self.__parametreObserver
 
-    #exporter les parametres du chairlift vers un fichier CSV
+    #exporter les paramètres du chairlift vers un fichier CSV
     def exporterVersCSV(self, chemin):
         ligne = [
             ("vitesse", round(float(self.__vitesse), 1)),
@@ -165,7 +165,7 @@ class Chairlift:
             redacteur.writerow(["Parametre", "Valeur"])   # en-tête
             redacteur.writerows(ligne)
 
-    #importer les parametres du chairlift depuis un fichier CSV
+    #importer les paramètres du chairlift depuis un fichier CSV
     def importerDepuisCSV(self, chemin):
         try:
             definisseurs = {
@@ -188,7 +188,7 @@ class Chairlift:
         except (OSError, ValueError, KeyError) as error:
             print("Chargement impossible :", error)
 
-    #test de la classe
+    #fonction pour tester le fonctionnement de la classe
     def tester(self):
         print("input vitesse: ")
         vitesse = float(input())
@@ -221,13 +221,3 @@ class Chairlift:
     def __str__(self):
         return f"Vitesse: {self.__vitesse}, Nombre de chaises: {self.__nombreDeChaise}, Longueur du trajet: {self.__longueurDuTrajet}, Temps d'embarquement: {self.__tempsEmbarquement}, Temps de débarquement: {self.__tempsDebarquement}, Nombre de personnes par chaise: {self.__nombreDePersonnesParChaise}, Temps de trajet: {self.calculerTempsTrajet()}, Temps de monter: {self.calculerTempsDeMonter()}, Temps de cycle: {self.calculerTempsDeCycle()}"
 
-#mon_chairlift = Chairlift()
-#mon_chairlift.tester()
-#mon_chairlift.definirParametreObserver("vitesse")
-#mon_chairlift.obtenirDonneesGraphique(11,0,10)
-#chemin = filedialog.asksaveasfilename(defaultextension=".csv",
-                                    #filetypes=[("Fichiers CSV", "*.csv")])
-#if chemin:
-    #self.chairlift.exporterVersCSV(chemin)
-#mon_chairlift.exporterVersCSV("parametres.csv")
-#mon_chairlift.importerDepuisCSV("parametres.csv")
