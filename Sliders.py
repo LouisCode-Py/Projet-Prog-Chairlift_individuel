@@ -49,6 +49,11 @@ class Sliders(ctk.CTkFrame) :
         self.creer_widgets_debarque()
         
         self.creer_widgets_capacite()
+
+        # Configurer les colonnes pour qu'ils prennent le frame, lorsqu'elle est étirée
+        for i in range(7) :
+            self.grid_rowconfigure(i, weight=1)
+        
         
     # Les suivantes sont appelées pour créer sliders, texte et boutons, etc. de chacun des paramètres.
     # Le fonctionnement de celles-ci est identique dépendant des paramètres, l'explication est donc seulement fait une fois.
