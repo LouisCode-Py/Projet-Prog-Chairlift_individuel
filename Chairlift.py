@@ -106,7 +106,7 @@ class Chairlift:
         if tempsDeCycle == 0:
             return 0
         nombreDePersonnesParHeure = (3600 / tempsDeCycle) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise
-        print(nombreDePersonnesParHeure)
+
         return int(nombreDePersonnesParHeure) #client/heure
 
     #calculer le nombre de personnes par heure en fonction du paramètre observé et de la valeur du paramètre manquant. Utile pour la génération de graphique. Le paramètre observé est celui qui est modifié dans le graphique.
