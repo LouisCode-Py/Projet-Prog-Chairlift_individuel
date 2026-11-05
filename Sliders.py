@@ -56,7 +56,7 @@ class Sliders(ctk.CTkFrame) :
         # Création du texte lié au paramètre spécifique
         ctk.CTkLabel(self, text="Longueur du câble").grid(row=0, column=0, sticky="w", padx=PADDING_EN_X, pady=PADDING_EN_Y)
 
-        # Création du slider, sa commande est relié à _quand_slider_"paramètre"
+        # Création du slider, sa commande est relié à _quand_slider_<paramètre>
         self.slider_cable = ctk.CTkSlider(self, from_=0, to=3000, number_of_steps=3000)
         self.slider_cable.set(0)
         self.slider_cable.configure(command=self._quand_slider_cable)
@@ -287,7 +287,7 @@ class Sliders(ctk.CTkFrame) :
     # Modifier les valeurs de des sliders pour qu'ils correspondent bien à celles importées
     def appliquer_val_sliders(self) :
         self.slider_cable.set(self.chairlift.obtenirLongueurDuTrajet())
-        self.text_cable.configure(text=str(self.chairlift.obtenirLongueurDuTrajet()))
+        self.text_cable.configure(text=str(self.chairlift.obtenirLongueurDuTrajet()) + " m")
 
         self.slider_capacite.set(self.chairlift.obtenirNombreDePersonnesParChaise())
         self.text_capacite.configure(text=str(self.chairlift.obtenirNombreDePersonnesParChaise()))
@@ -296,11 +296,11 @@ class Sliders(ctk.CTkFrame) :
         self.text_chaise.configure(text=str(self.chairlift.obtenirNombreDeChaise()))
 
         self.slider_debarque.set(self.chairlift.obtenirTempsDebarquement())
-        self.text_debarque.configure(text=str(self.chairlift.obtenirTempsDebarquement()))
+        self.text_debarque.configure(text=str(self.chairlift.obtenirTempsDebarquement()) + " s")
 
         self.slider_embarque.set(self.chairlift.obtenirTempsEmbarquement())
-        self.text_embarque.configure(text=str(self.chairlift.obtenirTempsEmbarquement()))
+        self.text_embarque.configure(text=str(self.chairlift.obtenirTempsEmbarquement()) + " s")
         
         self.slider_vitesse.set(self.chairlift.obtenirVitesse())
-        self.text_vitesse.configure(text=str(self.chairlift.obtenirVitesse()))
+        self.text_vitesse.configure(text=str(self.chairlift.obtenirVitesse()) + " m/s")
         

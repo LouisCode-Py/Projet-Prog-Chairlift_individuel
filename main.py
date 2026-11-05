@@ -24,7 +24,7 @@ class MainApp(ctk.CTk) :
         self.graph = GraphControl(self, self.__chairlift)
         self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
-        # Affichage du label du nombre de personne par heure avec les paramètres courants.
+        # Affichage du label du nombre de personnes par heure avec les paramètres courants.
         self.label_nb_personne = ctk.CTkLabel(self, bg_color="white", text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()), text_color="black")
         self.label_nb_personne.grid(row=1, column=1, sticky="nsew", padx=10, pady=(0,12))
         # Bouton de rafraichissement
@@ -42,13 +42,16 @@ class MainApp(ctk.CTk) :
         # Appeler mettre à jour qui met à jour l'image/le graph
         self.mettre_a_jour()
 
-    # mettre à jour le graphique 
+    # Mettre à jour le graphique 
     def mettre_a_jour(self):
         self.graph.mise_a_jour_image()
+        
+        self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
-    # Commande du bouton de rafraichissement qui recalcul et déselectionne
+    # Commande du bouton de rafraichissement qui recalcule et déselectionne
     def _rafraichissement(self) :
         self.sliders.reset_radio_var()
+        
         self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
 #Loop du MainApp et choix de l'apparence du ctk

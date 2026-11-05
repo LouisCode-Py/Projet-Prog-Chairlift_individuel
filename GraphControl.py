@@ -49,7 +49,7 @@ class GraphControl(tk.Frame):
                 xlabel=titrex, 
                 ylabel=titrey)
 
-        #Cas où aucun paramètre est selectionné
+        #Cas où aucun paramètre n'est selectionné
         if donnee is None or donnee.size == 0:
             self.axis.text(0.5,0.5,"Aucune données", transform=self.axis.transAxes,
                 ha="center", va="center")
