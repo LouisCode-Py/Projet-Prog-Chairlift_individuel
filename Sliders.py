@@ -285,7 +285,6 @@ class Sliders(ctk.CTkFrame) :
     
     def reset_radio_var(self) :
         self.radio_var.set(0)
-        self._actualiser_slider()
         self.chairlift.definirParametreObserver("none")
         self.mise_a_jour()
 

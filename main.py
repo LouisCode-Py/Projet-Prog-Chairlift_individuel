@@ -26,10 +26,15 @@ class MainApp(ctk.CTk) :
 
         # Affichage du label du nombre de personnes par heure avec les paramètres courants.
         self.label_nb_personne = ctk.CTkLabel(self, bg_color="white", text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()), text_color="black")
-        self.label_nb_personne.grid(row=1, column=1, sticky="nsew", padx=10, pady=(0,12))
+        self.label_nb_personne.grid(row=1, column=1, sticky="nsew", padx=10, pady=(0,12))\
+        
         # Bouton de rafraichissement
-        self.bouton_rafraichissement = ctk.CTkButton(self, text="Recalculer", command=self._rafraichissement)
-        self.bouton_rafraichissement.grid(row=2, column=1, sticky="nsew", padx=12, pady=(3,12))
+        #self.bouton_rafraichissement = ctk.CTkButton(self, text="Déselectionner", command=self._rafraichissement)
+        #self.bouton_rafraichissement.grid(row=2, column=1, sticky="nsew", padx=12, pady=(3,12))
+
+        # Bouton de déselection
+        self.bouton_deselection = ctk.CTkButton(self, text="Déselectionner", command=self._rafraichissement)
+        self.bouton_deselection.grid(row=2,column=1,sticky="e",padx=12,pady=(3,12))
 
         # Modifier le poids des différentes colonnes
         self.grid_columnconfigure(0, weight=0)
@@ -52,7 +57,7 @@ class MainApp(ctk.CTk) :
     def _rafraichissement(self) :
         self.sliders.reset_radio_var()
         
-        self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
+        #self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
 #Loop du MainApp et choix de l'apparence du ctk
 if __name__ == "__main__" :
