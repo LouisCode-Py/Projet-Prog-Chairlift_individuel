@@ -47,4 +47,11 @@ class Energy:
         self.__poidsCabletot = (self.poidsCable() * (2*self.__chairlift.obtenirLongueurDuTrajet()))
         return self.__poidsCabletot
 
-    # Calculer energie/h en fonction du poids
+    # Calculer energie/h en fonction du poids, ajouter angle inclinaison dans parametres de Chairlift.py
+    # E_lift = mgh => e = mt * g * (cableLength * angle inclinaison theta)
+    # P_lift = E_lift /3600 (watts)
+    # P_friction = μ × m_on_line × g × cos θ × v
+    ## Efficiency
+    # P_electric = (P_lift + P_friction) / η η ≈ 0.8 to 0.9
+    # Total energy = P_electric × operating time
+    # K non necessaire au long terme, juste utiliser au depart du chairlift
