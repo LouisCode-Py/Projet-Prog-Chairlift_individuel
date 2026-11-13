@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from Chairlift import Chairlift
 
 class Energy:
@@ -17,4 +18,12 @@ class Energy:
         return self.__singleChairWeight
 
     def poidsP(self):
-        
+        poidsPossible = [43,44,45,46,47,48,49,50]
+        nbPersonne = self.__chairlift.calculerNombreDePersonnesParHeure()
+        if nbPersonne == 0:
+            return 0
+        else: 
+            poidsTotal = 0
+            for i in range(nbPersonne):
+                poidsTotal += (poidsPossible + random.randint(0,107))
+            return poidsTotal
