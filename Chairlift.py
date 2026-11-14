@@ -1,7 +1,7 @@
 
 import numpy as np
 import csv
-
+    # FIN MODIFICATION
 class Chairlift:
     def __init__(self):
         self.__vitesse = 0 # m/s
