@@ -8,10 +8,16 @@ class Energy:
 
     def __init__(self, chairlift):
         self.__chairlift = chairlift
-        self.__energie = 0 #J
-        self.__gravity = 9.81 #m/s^2
-        self.__singleChairWeight = 0 #kg
-        self.__poidsCabletot = 0 #kg/m
+        self.__gravity = 9.81 # m/s^2
+        self.__singleChairWeight = 0 # kg
+        self.__poidsChaiseTot = 0 # kg
+        self.__poidsPersonneTot = 0 # kg
+        self.__poidsCabletot = 0 # kg/m
+
+        self.__energieLift = 0 # J
+        self.__powerLift = 0 # watts
+        self.__powerFriction = 0 # watt
+        self.__energieTot = 0 # J
 
     # Calcule poids des chaises individuelles
     def poidsC(self):
@@ -34,7 +40,8 @@ class Energy:
             poidsTotal = 0
             for i in range(nbPersonne):
                 poidsTotal += (poidsPossible + random.randint(0,107))
-            return poidsTotal
+            self.__poidsPersonneTot = poidsTotal
+            return self.__poidsPersonneTot
 
     def poidsCable(self):
         #kg/m
@@ -55,3 +62,26 @@ class Energy:
     # P_electric = (P_lift + P_friction) / η η ≈ 0.8 to 0.9
     # Total energy = P_electric × operating time
     # K non necessaire au long terme, juste utiliser au depart du chairlift
+
+    def energy_lift(self):
+        masseTot = self.__poidsCabletot + self.__poidsPersonneTot + self.__poidsChaiseTot
+        self.__energieLift = masseTot * self.__gravity * ((2*self.__chairlift.obtenirLongueurDuTrajet())*self.__chairlift.obtenirAngleInclinaison()) # implementer obtenir angle inclinaison
+        return self.__energieLift
+
+    def power_lift(self):
+        self.__powerLift = self.__energieLift / 3600
+        return self.__powerLift
+
+
+    def power_friction(self):
+        # frottement constant a 0.25
+        masseSurCable = self.__poidsChaiseT + self.__poidsPersonneTot
+        self.__powerFriction = 0.25 * masseSurCable * self.__gravity * np.cos(self.__chairlift.obtenirAngleInclinaison()) * self.__chairlift.obtenirVitesse()
+        return self.__powerFriction
+
+
+    def power_electric(self):
+
+
+    def total_energy(self):
+
