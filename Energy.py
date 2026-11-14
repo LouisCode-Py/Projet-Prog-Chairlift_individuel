@@ -17,7 +17,7 @@ class Energy:
         self.__energieLift = 0 # J
         self.__powerLift = 0 # watts
         self.__powerFriction = 0 # watt
-        self.__energieTot = 0 # J
+        self.__energieTot = 0 # W/h
 
     # Calcule poids des chaises individuelles
     def poidsC(self):
@@ -28,7 +28,8 @@ class Energy:
 
     # Calcule poids total des chaises
     def poidsChaiseT(self):
-        return (self.__singleChairWeight*self.__chairlift.obtenirNombreDeChaise())
+        self.__poidsChaiseTot = (self.__singleChairWeight*self.__chairlift.obtenirNombreDeChaise())
+        return self.__poidsChaiseTot
 
     # Calcule poids total des personnes par heure
     def poidsP(self):
@@ -65,7 +66,7 @@ class Energy:
 
     def energy_lift(self):
         masseTot = self.__poidsCabletot + self.__poidsPersonneTot + self.__poidsChaiseTot
-        self.__energieLift = masseTot * self.__gravity * ((2*self.__chairlift.obtenirLongueurDuTrajet())*self.__chairlift.obtenirAngleInclinaison()) # implementer obtenir angle inclinaison
+        self.__energieLift = masseTot * self.__gravity * ((2*self.__chairlift.obtenirLongueurDuTrajet())*np.sin(self.__chairlift.obtenirAngleInclinaison())) # implementer obtenir angle inclinaison
         return self.__energieLift
 
     def power_lift(self):
@@ -75,13 +76,16 @@ class Energy:
 
     def power_friction(self):
         # frottement constant a 0.25
-        masseSurCable = self.__poidsChaiseT + self.__poidsPersonneTot
+        masseSurCable = self.__poidsChaiseTot + self.__poidsPersonneTot
         self.__powerFriction = 0.25 * masseSurCable * self.__gravity * np.cos(self.__chairlift.obtenirAngleInclinaison()) * self.__chairlift.obtenirVitesse()
         return self.__powerFriction
 
 
     def power_electric(self):
+        self.__powerElectric = (self.__powerLift + self.__powerFriction) / 0.8
+        return self.__powerElectric
 
 
     def total_energy(self):
-
+        self.__energieTot = self.__powerElectric * 12
+        return self.__energieTot
