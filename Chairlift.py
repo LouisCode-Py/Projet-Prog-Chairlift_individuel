@@ -10,6 +10,7 @@ class Chairlift:
         self.__longueurDuTrajet = 0 # m
         self.__tempsEmbarquement = 0 # s
         self.__tempsDebarquement = 0 # s
+        self.__angleInclinaison = 0 # rad
 
         self.__parametreObserver = "none"
 

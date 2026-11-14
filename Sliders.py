@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import IntVar, filedialog
-
+######## AJOUTER SLIDER ANGLE
 # Constante des paddings pour les widgets de chaque paramètre
 PADDING_EN_Y = 30
 PADDING_EN_X = 10
