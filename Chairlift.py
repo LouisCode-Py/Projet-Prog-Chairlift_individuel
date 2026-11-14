@@ -14,6 +14,15 @@ class Chairlift:
 
         self.__parametreObserver = "none"
 
+
+    #setter pour l'angle du remonte-pente
+    def definirAngle(self, angle):
+        if angle >= 0:
+            self.__angleInclinaison = angle
+            return True
+        else:
+            return False
+        
     #setter pour la vitesse de deplacement du chairlift
     def definirVitesse(self, vitesse):
         if vitesse >= 0:
@@ -67,6 +76,9 @@ class Chairlift:
         else:
             return False
     # Getters des différents paramètres, convertis dans le bon type
+    def obtenirAngleInclinaison(self):
+        return float(self.__angleInclinaison)
+    
     def obtenirVitesse(self):
         return round(float(self.__vitesse), 1)
 
@@ -190,6 +202,11 @@ class Chairlift:
 
     #fonction pour tester le fonctionnement de la classe
     def tester(self):
+        
+        print("input angle inclinaison: ")
+        angle = float(input())
+        self.definirAngle(angle)
+
         print("input vitesse: ")
         vitesse = float(input())
         self.definirVitesse(vitesse)
