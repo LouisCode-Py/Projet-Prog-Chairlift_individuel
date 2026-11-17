@@ -30,7 +30,7 @@ class GraphControl(tk.Frame):
 
         #Création dictionnaire des noms d'axe des x possible et accesseur de paramètre ajouté
         parametre_obs = self.modele.obtenirParametreObserver()
-
+        
         #Création attribut du titre de l'axe des x
         titrex_dic ={"vitesse":["Vitesse"], "nombreDeChaise":["Nombre de chaise"], "longueurDuTrajet":["Longueur du trajet"],
                   "tempsEmbarquement":["Temps embarquement"], "tempsDebarquement":["Temps debarquement"], "nombreDePersonnesParChaise":["Personnes par chaise"], "none":["Vide"]}

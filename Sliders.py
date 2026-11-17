@@ -30,9 +30,9 @@ class Sliders(ctk.CTkFrame) :
 
         # Créer les boutons d'importation et d'exportation, leur passer la commande _quand_importer qui est appelé si les boutons sont cliqués
         self.bouton_importer = ctk.CTkButton(self, text="Importer un CSV", command=self._quand_importer)
-        self.bouton_importer.grid(row=6, column=0, padx=PADDING_EN_X, pady=20)
+        self.bouton_importer.grid(row=7, column=0, padx=PADDING_EN_X, pady=20)
         self.bouton_exporter = ctk.CTkButton(self, text="Exporter un CSV", command=self._quand_exporter)
-        self.bouton_exporter.grid(row=6, column=1, padx=PADDING_EN_X, pady=20)
+        self.bouton_exporter.grid(row=7, column=1, padx=PADDING_EN_X, pady=20)
 
         # initialiser la variable pour les "radiobutton", empêche que plusieurs soient cochés
         self.radio_var = IntVar(value=0)
@@ -298,7 +298,13 @@ class Sliders(ctk.CTkFrame) :
             print("Erreur dans le setter 6")
 
         """Angle d'inclinaison"""
-        self.slider_angle.configure(state=)
+        self.slider_angle.configure(state="disabled" if selection == 7 else "normal")
+        resultat7 = self.chairlift.definirParametreObserver("angleInclinaison") if selection == 7 else True
+        if selection == 7 and resultat7:
+            print("Graph changement d'angle")
+            self.mise_a_jour()
+        if not resultat7:
+            print("Erreur dans le setter 7")
     
     
     # Fonctions appelées lors de l'appui des boutons d'import et d'export

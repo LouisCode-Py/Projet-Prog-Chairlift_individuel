@@ -10,14 +10,14 @@ class Chairlift:
         self.__longueurDuTrajet = 0 # m
         self.__tempsEmbarquement = 0 # s
         self.__tempsDebarquement = 0 # s
-        self.__angleInclinaison = 0 # rad
+        self.__angleInclinaison = 0 # degree
 
         self.__parametreObserver = "none"
 
 
     #setter pour l'angle du remonte-pente
     def definirAngle(self, angle):
-        if isinstance(angle,(int,float)) and 0 <= angle <= np.pi/2:
+        if isinstance(angle,(int,float)) and 0 <= angle <= 60:
             self.__angleInclinaison = float(angle)
             return True
         return False
