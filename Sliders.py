@@ -38,6 +38,9 @@ class Sliders(ctk.CTkFrame) :
         self.radio_var = IntVar(value=0)
 
         # Appeler les fonctions de création de chacun des paramètres du chairlift
+
+        self.creer_widgets_angle()
+
         self.creer_widgets_cable()
         
         self.creer_widgets_chaise()
@@ -57,6 +60,25 @@ class Sliders(ctk.CTkFrame) :
         
     # Les suivantes sont appelées pour créer sliders, texte et boutons, etc. de chacun des paramètres.
     # Le fonctionnement de celles-ci est identique dépendant des paramètres, l'explication est donc seulement fait une fois.
+
+    def creer_widgets_angle(self) :
+        # Création du titre du slider d'angle
+        ctk.CTkLabel(self, text="Angle d'inclinaison").grid(row=6, column=0, sticky="w",padx=12,pady=(3,12))
+
+        # Création de slider
+        self.slider_angle = ctk.CTkSlider(self, from_=0, to=60, number_of_steps=60)
+        self.slider_angle.set(0)
+        self.slider_angle.configure(command=self._quand_slider_angle)
+        self.slider_angle.grid(row=6, column=1)
+
+        # Création du texte qui affiche la valeur du slider
+        self.text_angle = ctk.CTkLabel(self, text = "0" + " °")
+        self.text_angle.grid(row=6, column=2, sticky="ew", padx=PADDING_EN_X, pady=PADDING_EN_Y)
+
+        # Création du bouton de radio pour selectionner un seul 
+        self.case_angle = ctk.CTkRadioButton(self, text="", command=self._actualiser_slider, variable=self.radio_var, value=7)
+        self.case_angle.grid(row=6,column=3,sticky="e")
+
     def creer_widgets_cable(self) :
         # Création du texte lié au paramètre spécifique
         ctk.CTkLabel(self, text="Longueur du câble").grid(row=0, column=0, sticky="w", padx=PADDING_EN_X, pady=PADDING_EN_Y)
@@ -148,9 +170,18 @@ class Sliders(ctk.CTkFrame) :
 
     # Les suivantes sont appelés lorsque leurs sliders respectifs changent de valeurs
     # Le fonctionnement de celles-ci est identique dépendant des paramètres, l'explication est donc seulement fait une fois.
+
+    def _quand_slider_angle(self, valeur) :
+        if not self.chairlift.definirAngle(valeur)  :
+            print("erreur de limite??")
+        self.text_angle.configure(
+            text=str(self.chairlift.obtenirAngleInclinaison()) + " °"
+        )
+        self.mise_a_jour()
+
     def _quand_slider_cable(self, valeur) :
         if not self.chairlift.definirLongueurDuTrajet(valeur) :
-            print("erreur de limite")
+            print("erreur de limite??")
         self.text_cable.configure(
             text=str(self.chairlift.obtenirLongueurDuTrajet()) + " m"
         )
@@ -265,6 +296,9 @@ class Sliders(ctk.CTkFrame) :
             self.mise_a_jour()
         if not resultat6 :
             print("Erreur dans le setter 6")
+
+        """Angle d'inclinaison"""
+        self.slider_angle.configure(state=)
     
     
     # Fonctions appelées lors de l'appui des boutons d'import et d'export
