@@ -17,11 +17,10 @@ class Chairlift:
 
     #setter pour l'angle du remonte-pente
     def definirAngle(self, angle):
-        if angle >= 0:
-            self.__angleInclinaison = angle
+        if isinstance(angle,(int,float)) and 0 <= angle <= np.pi/2:
+            self.__angleInclinaison = float(angle)
             return True
-        else:
-            return False
+        return False
         
     #setter pour la vitesse de deplacement du chairlift
     def definirVitesse(self, vitesse):
@@ -170,6 +169,7 @@ class Chairlift:
             ("longueurDuTrajet", int(self.__longueurDuTrajet)),
             ("tempsEmbarquement", int(self.__tempsEmbarquement)),
             ("tempsDebarquement", int(self.__tempsDebarquement)),
+            ("angleInclinaison", float(self.__angleInclinaison)),
         ]
 
         with open(chemin, "w", newline="", encoding="utf-8") as fichier:
@@ -187,6 +187,7 @@ class Chairlift:
                 "longueurDuTrajet": (self.definirLongueurDuTrajet, int),
                 "tempsEmbarquement": (self.definirTempsEmbarquement, int),
                 "tempsDebarquement": (self.definirTempsDebarquement, int),
+                "angleInclinaison":(self.definirAngle,float),
             }
 
             with open(chemin, newline="", encoding="utf-8") as fichier:
