@@ -5,6 +5,7 @@ from GraphControl import GraphControl
 import customtkinter as ctk
 
 class MainApp(ctk.CTk) :
+        #TODO AJOUTER CREATEUR D'INSTANCE D'ENERGY
 
     def __init__(self) :
         # Initialiser la fenêtre principale
