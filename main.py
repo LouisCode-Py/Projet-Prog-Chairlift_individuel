@@ -1,6 +1,7 @@
 from Sliders import Sliders
 from Chairlift import Chairlift
 from GraphControl import GraphControl
+from Energy import Energy
 
 import customtkinter as ctk
 
@@ -25,9 +26,14 @@ class MainApp(ctk.CTk) :
         self.graph = GraphControl(self, self.__chairlift)
         self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
+        # Initialisation d'une instance d'energie
+        self.energy = Energy(self, self.__chairlift)
+
         # Affichage du label du nombre de personnes par heure avec les paramètres courants.
         self.label_nb_personne = ctk.CTkLabel(self, bg_color="white", text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()), text_color="black")
         self.label_nb_personne.grid(row=1, column=1, sticky="nsew", padx=10, pady=(0,12))\
+
+
         
         # Bouton de rafraichissement
         #self.bouton_rafraichissement = ctk.CTkButton(self, text="Déselectionner", command=self._rafraichissement)
@@ -36,6 +42,12 @@ class MainApp(ctk.CTk) :
         # Bouton de déselection
         self.bouton_deselection = ctk.CTkButton(self, text="Déselectionner", command=self._rafraichissement)
         self.bouton_deselection.grid(row=2,column=1,sticky="e",padx=12,pady=(3,12))
+
+        #"""
+        # Bouton de calcul d'energie (all)
+        self.bouton_energie = ctk.CTkButton(self, text="Calcul Energie", command = self._energie_calcul)
+        self.bouton_energie.grid(row=2,column=1,sticky="w",padx=12,pady=(3,12))
+        #"""
 
         # Modifier le poids des différentes colonnes
         self.grid_columnconfigure(0, weight=0)
@@ -54,11 +66,18 @@ class MainApp(ctk.CTk) :
         
         self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
+        #.label_calcul_energie.configure(text="energie : " + str(self.energy.calculerTout))
+
     # Commande du bouton de rafraichissement qui recalcule et déselectionne
     def _rafraichissement(self) :
         self.sliders.reset_radio_var()
         
         #self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
+
+    def _energie_calcul(self):
+        self.energy.calculerTout()
+        self.energy.total_energy()
+        #self.label_calcul_energie.configure(text="Tout energie : " + str(self))
 
 #Loop du MainApp et choix de l'apparence du ctk
 if __name__ == "__main__" :
