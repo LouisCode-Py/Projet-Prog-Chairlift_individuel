@@ -6,18 +6,22 @@ class Energy:
 
     #PAR HEURE, POIDS CHAISE OK, POIDS PERSONNES OK, POIDS CABLE (M/KG) OK
 
-    def __init__(self, chairlift):
+    def __init__(self,parent, chairlift):
         self.__chairlift = chairlift
         self.__gravity = 9.81 # m/s^2
         self.__singleChairWeight = 0 # kg
         self.__poidsChaiseTot = 0 # kg
         self.__poidsPersonneTot = 0 # kg
         self.__poidsCabletot = 0 # kg/m
-
         self.__energieLift = 0 # J
         self.__powerLift = 0 # watts
         self.__powerFriction = 0 # watt
         self.__energieTot = 0 # W/h
+
+    # Transformer degrees en radians
+    def obtenirRad(self):
+        self._angle_radians = np.deg2rad(self.__chairlift.obtenirAngleInclinaison())
+        return self._angle_radians
 
     # Calcule poids des chaises individuelles
     def poidsC(self):
@@ -64,7 +68,7 @@ class Energy:
 
     def energy_lift(self):
 
-        hauteur = (self.__chairlift.obtenirLongueurDuTrajet() * np.sin(self.__chairlift.obtenirAngleInclinaison()))
+        hauteur = (self.__chairlift.obtenirLongueurDuTrajet() * np.sin(self._angle_radians))
         
         self.__energieLift =  self.__poidsPersonneTot * self.__gravity * hauteur # implementer obtenir angle inclinaison
         
@@ -84,7 +88,7 @@ class Energy:
         
         masseSurCable = self.__poidsChaiseTot + self.__poidsPersonneTot * self.__chairlift.obtenirLongueurDuTrajet() / (3600 * vitesse)
 
-        self.__powerFriction = 0.25 * masseSurCable * self.__gravity * np.cos(self.__chairlift.obtenirAngleInclinaison()) * vitesse
+        self.__powerFriction = 0.25 * masseSurCable * self.__gravity * np.cos(self._angle_radians) * vitesse
         
         return self.__powerFriction
 
@@ -98,16 +102,17 @@ class Energy:
         self.__energieTot = self.__powerElectric * 12
         return self.__energieTot
 
-    def caculerTout(self):
-        self.poidsC()
-        self.poidsChaiseT()
-        self.poidsP()
-        self.poidsCableTotal()
+    def calculerTout(self):
+        print(self.obtenirRad(),
+        self.poidsC(),
+        self.poidsChaiseT(),
+        self.poidsP(),
+        self.poidsCableTotal(),
 
-        self.energy_lift()
-        self.power_lift()
-        self.power_friction()
-        self.power_electric()
+        self.energy_lift(),
+        self.power_lift(),
+        self.power_friction(),
+        self.power_electric())
 
         return {
         "puissance_lift": self.__powerLift,
