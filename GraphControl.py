@@ -54,11 +54,20 @@ class GraphControl(tk.Frame):
             if donnee is None or donnee.size == 0:
                 self.axis.text(0.5,0.5,"Aucune données", transform=self.axis.transAxes,
                     ha="center", va="center")
-            
+
             else:
                 x,y = donnee.T
                 self.axis.plot(x, y, label=titre)
                 self.axis.legend()
+        if parametre_obs == "angleInclinaison":
+            #TODO FAIRE UN GRAPHIQUE axe x : vitesse ou angle??, axe y : energie par heure
+            self.axis.clear()
+            self.axis.set(title="Énergie par heure en fonction de xxxx",
+                          xlabel="",
+                          ylabel="Énergie par heure")
+            x,y = donnee.T
+            self.axis.plot(x, y)
+            self.axis.legend()
 
         self.axis.grid(alpha=0.3)
         self.canvas.draw_idle()
