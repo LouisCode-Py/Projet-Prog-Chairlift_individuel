@@ -112,7 +112,7 @@ class Energy:
     def calculerY(self):
         donneesY = []
         for i in range(61):
-            #### OBTENIR ANGLE EN RAD A CHAQUE ANGLE POSSIBLE DE 0 A 60 POUR PLUGGER TOUT DANS LA LISTE
+            ####TODO OBTENIR ANGLE EN RAD A CHAQUE ANGLE POSSIBLE DE 0 A 60 POUR PLUGGER TOUT DANS LA LISTE
             donneesY.append(self.total_energy())
 
 
