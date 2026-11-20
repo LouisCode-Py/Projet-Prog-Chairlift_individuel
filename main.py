@@ -8,7 +8,6 @@ import tkinter as tk
 import customtkinter as ctk
 
 class MainApp(ctk.CTkFrame) :
-        #TODO AJOUTER CREATEUR D'INSTANCE D'ENERGY
 
     def __init__(self,parent) :
         # Initialiser la fenêtre principale
@@ -89,7 +88,6 @@ class MainApp(ctk.CTkFrame) :
         self.energy.total_energy()
         #self.label_calcul_energie.configure(text="Tout energie : " + str(self))
 
-#Loop du MainApp et choix de l'apparence du ctk
 
 class Application(ctk.CTk):
     def __init__(self):
@@ -107,7 +105,8 @@ class Application(ctk.CTk):
         self.current_view.destroy()
         self.current_view = MainApp(self)
         self.current_view.pack(fill="both",expand=True)   
-    
+
+    #Loop du MainApp et choix de l'apparence du ctk
 if __name__ == "__main__" :
     ctk.set_appearance_mode("system")
     ctk.set_default_color_theme("green")
