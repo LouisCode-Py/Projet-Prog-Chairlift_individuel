@@ -1,12 +1,12 @@
 import customtkinter as ctk
 from PIL import Image
-import PIL
+##mport PIL
 
 
 class Fiche(ctk.CTkFrame):
     def __init__(self,parent,continuer):
         super().__init__(parent)
-        image = PIL.Image.open("96431.png")
+        image = Image.open("96431.png")
         self.fond_ecran = ctk.CTkImage(light_image=image,dark_image=image,size=(1200,700))
 
         self.bg_label = ctk.CTkLabel(self, text="", image=self.fond_ecran)
