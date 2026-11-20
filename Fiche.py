@@ -12,7 +12,8 @@ class Fiche(ctk.CTkFrame):
         self.bg_label = ctk.CTkLabel(self, text="", image=self.fond_ecran)
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-        self.button = ctk.CTkButton(self,text="Bienvenue, veuillez cliquer pour continuer", command=continuer)
+        self.button = ctk.CTkButton(self,text="Bienvenue, veuillez cliquer pour continuer",fg_color="black",hover_color="black", command=continuer)
+        self.button.configure
         self.button.place(anchor=ctk.CENTER, relx=0.5,rely=0.5)
         self.bind("<Configure>", self._changer_fe)
 
