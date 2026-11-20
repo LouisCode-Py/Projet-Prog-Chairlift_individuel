@@ -17,8 +17,8 @@ class Chairlift:
 
     #setter pour l'angle du remonte-pente
     def definirAngle(self, angle):
-        if isinstance(angle,(int,float)) and 0 <= angle <= 60:
-            self.__angleInclinaison = float(angle)
+        if angle <= 60:
+            self.__angleInclinaison = angle
             return True
         return False
         
@@ -69,14 +69,14 @@ class Chairlift:
             return False
     #setter pour le paramètre observé du chairlift    
     def definirParametreObserver(self, parametreObserver):
-        if parametreObserver in ["vitesse", "nombreDeChaise", "longueurDuTrajet", "tempsEmbarquement", "tempsDebarquement", "nombreDePersonnesParChaise", "none"]:
+        if parametreObserver in ["vitesse", "nombreDeChaise", "longueurDuTrajet", "tempsEmbarquement", "tempsDebarquement", "nombreDePersonnesParChaise","angleInclinaison", "none"]:
             self.__parametreObserver = parametreObserver
             return True
         else:
             return False
     # Getters des différents paramètres, convertis dans le bon type
     def obtenirAngleInclinaison(self):
-        return float(self.__angleInclinaison)
+        return int(self.__angleInclinaison)
     
     def obtenirVitesse(self):
         return round(float(self.__vitesse), 1)
@@ -169,7 +169,7 @@ class Chairlift:
             ("longueurDuTrajet", int(self.__longueurDuTrajet)),
             ("tempsEmbarquement", int(self.__tempsEmbarquement)),
             ("tempsDebarquement", int(self.__tempsDebarquement)),
-            ("angleInclinaison", float(self.__angleInclinaison)),
+            ("angleInclinaison", int(self.__angleInclinaison)),
         ]
 
         with open(chemin, "w", newline="", encoding="utf-8") as fichier:
@@ -187,7 +187,7 @@ class Chairlift:
                 "longueurDuTrajet": (self.definirLongueurDuTrajet, int),
                 "tempsEmbarquement": (self.definirTempsEmbarquement, int),
                 "tempsDebarquement": (self.definirTempsDebarquement, int),
-                "angleInclinaison":(self.definirAngle,float),
+                "angleInclinaison":(self.definirAngle,int),
             }
 
             with open(chemin, newline="", encoding="utf-8") as fichier:

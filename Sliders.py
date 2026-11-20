@@ -347,4 +347,7 @@ class Sliders(ctk.CTkFrame) :
         
         self.slider_vitesse.set(self.chairlift.obtenirVitesse())
         self.text_vitesse.configure(text=str(self.chairlift.obtenirVitesse()) + " m/s")
+
+        self.slider_angle.set(self.chairlift.obtenirAngleInclinaison())
+        self.text_angle.configure(text=str(self.chairlift.obtenirAngleInclinaison()))
         
