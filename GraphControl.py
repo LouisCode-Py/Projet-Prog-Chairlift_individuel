@@ -30,34 +30,35 @@ class GraphControl(tk.Frame):
 
         #Création dictionnaire des noms d'axe des x possible et accesseur de paramètre ajouté
         parametre_obs = self.modele.obtenirParametreObserver()
+        if parametre_obs != "angleInclinaison":
         
-        #Création attribut du titre de l'axe des x
-        titrex_dic ={"vitesse":["Vitesse"], "nombreDeChaise":["Nombre de chaise"], "longueurDuTrajet":["Longueur du trajet"],
-                  "tempsEmbarquement":["Temps embarquement"], "tempsDebarquement":["Temps debarquement"], "nombreDePersonnesParChaise":["Personnes par chaise"], "none":["Vide"]}
-        #Création attribut du titre de graphique
-        titre_dic ={"vitesse":["Débit selon la vitesse"], "nombreDeChaise":["Débit selon les chaises"], "longueurDuTrajet":["Débit selon la longueur"],
-                    "tempsEmbarquement":["Débit selon l'embarquement"],"tempsDebarquement":["Débit selon débarquement"],"nombreDePersonnesParChaise":["Débit selon la capacité par chaise"],
-                    "none":["Aucun paramètre sélectionné"]}      
+            #Création attribut du titre de l'axe des x
+            titrex_dic ={"vitesse":["Vitesse"], "nombreDeChaise":["Nombre de chaise"], "longueurDuTrajet":["Longueur du trajet"],
+                      "tempsEmbarquement":["Temps embarquement"], "tempsDebarquement":["Temps debarquement"], "nombreDePersonnesParChaise":["Personnes par chaise"], "none":["Vide"]}
+            #Création attribut du titre de graphique
+            titre_dic ={"vitesse":["Débit selon la vitesse"], "nombreDeChaise":["Débit selon les chaises"], "longueurDuTrajet":["Débit selon la longueur"],
+                        "tempsEmbarquement":["Débit selon l'embarquement"],"tempsDebarquement":["Débit selon débarquement"],"nombreDePersonnesParChaise":["Débit selon la capacité par chaise"],
+                        "none":["Aucun paramètre sélectionné"]}      
 
-        #Créer les titres concrets qui vont être mis dans le graphique
-        titrex = titrex_dic[parametre_obs][0]
-        titre = titre_dic[parametre_obs][0]
+            #Créer les titres concrets qui vont être mis dans le graphique
+            titrex = titrex_dic[parametre_obs][0]
+            titre = titre_dic[parametre_obs][0]
 
-        #Ajouter les bons axes au graphique
-        self.axis.clear()
-        self.axis.set(title=titre,
-                xlabel=titrex, 
-                ylabel=titrey)
+            #Ajouter les bons axes au graphique
+            self.axis.clear()
+            self.axis.set(title=titre,
+                    xlabel=titrex, 
+                    ylabel=titrey)
 
-        #Cas où aucun paramètre n'est selectionné
-        if donnee is None or donnee.size == 0:
-            self.axis.text(0.5,0.5,"Aucune données", transform=self.axis.transAxes,
-                ha="center", va="center")
-        
-        else:
-            x,y = donnee.T
-            self.axis.plot(x, y, label=titre)
-            self.axis.legend()
+            #Cas où aucun paramètre n'est selectionné
+            if donnee is None or donnee.size == 0:
+                self.axis.text(0.5,0.5,"Aucune données", transform=self.axis.transAxes,
+                    ha="center", va="center")
+            
+            else:
+                x,y = donnee.T
+                self.axis.plot(x, y, label=titre)
+                self.axis.legend()
 
         self.axis.grid(alpha=0.3)
         self.canvas.draw_idle()
