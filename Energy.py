@@ -102,6 +102,20 @@ class Energy:
         self.__energieTot = self.__powerElectric * 12
         return self.__energieTot
 
+    def listeX(self):
+        donneesX = []
+        for i in range(61):
+            donneesX.append(i)
+        return donneesX
+
+
+    def calculerY(self):
+        donneesY = []
+        for i in range(61):
+            #### OBTENIR ANGLE EN RAD A CHAQUE ANGLE POSSIBLE DE 0 A 60 POUR PLUGGER TOUT DANS LA LISTE
+            donneesY.append(self.total_energy())
+
+
     def calculerTout(self):
         print(self.obtenirRad(),
         self.poidsC(),
