@@ -2,17 +2,18 @@ from Sliders import Sliders
 from Chairlift import Chairlift
 from GraphControl import GraphControl
 from Energy import Energy
+from Fiche import Fiche
+import tkinter as tk
 
 import customtkinter as ctk
 
-class MainApp(ctk.CTk) :
+class MainApp(ctk.CTkFrame) :
         #TODO AJOUTER CREATEUR D'INSTANCE D'ENERGY
 
-    def __init__(self) :
+    def __init__(self,parent) :
         # Initialiser la fenêtre principale
-        super().__init__()
-        self.title("Gestionnaire de remonte-pente mécanique")
-        self.geometry("1200x700")
+        super().__init__(parent)
+       
 
         # Initialiser, en privé, le Chairlift courant
         self.__chairlift = Chairlift()
@@ -60,6 +61,15 @@ class MainApp(ctk.CTk) :
         # Appeler mettre à jour qui met à jour l'image/le graph
         self.mettre_a_jour()
 
+    # Creer barre de menu pour selectionner entre page d'acceuil et graphe a barres d'energie
+    def create_menu(self):
+        menu_bar = tk.Menu(self)
+        self.config(menu=menu_bar)
+
+        selection_menu = tk.Menu(menu_bar,tearoff=0)
+        menu_bar.add_cascade(label="Selection", menu=selection_menu)
+        ###selection_menu.add_command(label="Page acceuil", command=self.) ## Trouver comment mettre page acceuil comme premiere option
+
     # Mettre à jour le graphique 
     def mettre_a_jour(self):
         self.graph.mise_a_jour_image()
@@ -80,8 +90,26 @@ class MainApp(ctk.CTk) :
         #self.label_calcul_energie.configure(text="Tout energie : " + str(self))
 
 #Loop du MainApp et choix de l'apparence du ctk
+
+class Application(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+        self.title("Gestionnaire de remonte-pente mécanique")
+        self.geometry("1200x700")
+        self.show_fiche()
+
+
+    def show_fiche(self):
+        self.current_view = Fiche(self, self.show_main)
+        self.current_view.pack(fill="both", expand=True)     
+
+    def show_main(self):
+        self.current_view.destroy()
+        self.current_view = MainApp(self)
+        self.current_view.pack(fill="both",expand=True)   
+    
 if __name__ == "__main__" :
     ctk.set_appearance_mode("system")
     ctk.set_default_color_theme("green")
-    application = MainApp()
+    application = Application()
     application.mainloop()
