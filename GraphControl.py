@@ -7,8 +7,9 @@ from Chairlift import Chairlift
 
 class GraphControl(tk.Frame):
 
-    def __init__(self,parent,modele):
+    def __init__(self,parent,modele,energy):
         super().__init__(parent)
+        self.energy = energy
         self.modele = modele
         self.creation_image()
 
@@ -26,11 +27,11 @@ class GraphControl(tk.Frame):
 #fonction pour que l'image puisse changer lors de la modification des parametres
     def mise_a_jour_image(self,titrey="Personnes par heure"):
         
-        donnee = self.modele.obtenirDonneesGraphique(11,0,10)
 
         #Création dictionnaire des noms d'axe des x possible et accesseur de paramètre ajouté
         parametre_obs = self.modele.obtenirParametreObserver()
         if parametre_obs != "angleInclinaison":
+            donnee = self.modele.obtenirDonneesGraphique(11,0,10)
         
             #Création attribut du titre de l'axe des x
             titrex_dic ={"vitesse":["Vitesse"], "nombreDeChaise":["Nombre de chaise"], "longueurDuTrajet":["Longueur du trajet"],
@@ -60,12 +61,13 @@ class GraphControl(tk.Frame):
                 self.axis.plot(x, y, label=titre)
                 self.axis.legend()
         if parametre_obs == "angleInclinaison":
-            #TODO FAIRE UN GRAPHIQUE axe x : vitesse ou angle??, axe y : energie par heure
+            # Angle plus haut "contre" friction, ce qui fait que moins d'énergie est requise à un plus haut angle
+            x=self.energy.listeX()
+            y = self.energy.calculerY()
             self.axis.clear()
-            self.axis.set(title="Énergie par heure en fonction de xxxx",
-                          xlabel="",
-                          ylabel="Énergie par heure")
-            x,y = donnee.T
+            self.axis.set(title="Énergie en fonction de l'angle",
+                          xlabel="Angle inclinaison (°)",
+                          ylabel="Énergie (Wh)")
             self.axis.plot(x, y)
             self.axis.legend()
 
