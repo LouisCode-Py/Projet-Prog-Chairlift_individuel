@@ -22,12 +22,15 @@ class MainApp(ctk.CTkFrame) :
         self.sliders = Sliders(self, self.__chairlift, self.mettre_a_jour)
         self.sliders.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=12, pady=12)
 
-        # Initialiser la frame du Graphique
-        self.graph = GraphControl(self, self.__chairlift)
-        self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
         # Initialisation d'une instance d'energie
         self.energy = Energy(self, self.__chairlift)
+
+
+        # Initialiser la frame du Graphique
+        self.graph = GraphControl(self, self.__chairlift,self.energy)
+        self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
+
 
         # Affichage du label du nombre de personnes par heure avec les paramètres courants.
         self.label_nb_personne = ctk.CTkLabel(self, bg_color="white", text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()), text_color="black")
