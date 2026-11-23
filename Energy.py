@@ -135,7 +135,7 @@ class Energy:
                 # Ajout de l'énergie a la liste de valeur des y
                 donneesY.append(self.total_energy())
 
-    
+        # Fait en sorte que peu importe si le try fonctionne ou non, finally est exécuté (remet l'angle initial en tant qu'angle défini)
         finally:
             self.__chairlift.definirAngle(angle_initial)
 
