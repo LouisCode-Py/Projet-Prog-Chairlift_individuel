@@ -16,7 +16,7 @@ class Energy:
         self.__energieLift = 0 # J
         self.__powerLift = 0 # watts
         self.__powerFriction = 0 # watt
-        self.__energieTot = 0 # W/h
+        self.__energieTot = 0 # Wh
 
     # Transformer degrees en radians
     def obtenirRad(self):
@@ -79,6 +79,7 @@ class Energy:
         return self.__powerLift
 
 
+    # Calcule la puissance perdue en friction
     def power_friction(self):
         # frottement constant a 0.25
         vitesse = self.__chairlift.obtenirVitesse()
@@ -86,7 +87,7 @@ class Energy:
             self.__powerFriction = 0
             return self.__powerFriction
         
-        masseSurCable = self.__poidsChaiseTot + self.__poidsPersonneTot * self.__chairlift.obtenirLongueurDuTrajet() / (3600 * vitesse)
+        masseSurCable = self.__poidsCabletot + self.__poidsChaiseTot + self.__poidsPersonneTot * self.__chairlift.obtenirLongueurDuTrajet() / (3600 * vitesse)
 
         self.__powerFriction = 0.25 * masseSurCable * self.__gravity * np.cos(self._angle_radians) * vitesse
         
@@ -110,10 +111,35 @@ class Energy:
 
 
     def calculerY(self):
+        # Initialiser paramètres de base
+        angles = self.listeX()
         donneesY = []
-        for i in range(61):
-            ####TODO OBTENIR ANGLE EN RAD A CHAQUE ANGLE POSSIBLE DE 0 A 60 POUR PLUGGER TOUT DANS LA LISTE
-            donneesY.append(self.total_energy())
+        angle_initial = self.__chairlift.obtenirAngleInclinaison()
+
+        # Calculer poids de chaque objet qui change la demande de travail
+        self.poidsC()
+        self.poidsChaiseT()
+        self.poidsP()
+        self.poidsCableTotal()
+
+        try:
+            for angle in angles:
+                self.__chairlift.definirAngle(angle)
+
+                self.obtenirRad()
+                self.energy_lift()
+                self.power_lift()
+                self.power_friction()
+                self.power_electric()
+
+                # Ajout de l'énergie a la liste de valeur des y
+                donneesY.append(self.total_energy())
+
+    
+        finally:
+            self.__chairlift.definirAngle(angle_initial)
+
+        return donneesY
 
 
     def calculerTout(self):
