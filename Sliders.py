@@ -29,10 +29,10 @@ class Sliders(ctk.CTkFrame) :
     def creer_widgets(self) :
 
         # Créer les boutons d'importation et d'exportation, leur passer la commande _quand_importer qui est appelé si les boutons sont cliqués
-        self.bouton_importer = ctk.CTkButton(self, text="Importer un CSV", command=self._quand_importer)
-        self.bouton_importer.grid(row=7, column=0, padx=PADDING_EN_X, pady=20)
-        self.bouton_exporter = ctk.CTkButton(self, text="Exporter un CSV", command=self._quand_exporter)
-        self.bouton_exporter.grid(row=7, column=1, padx=PADDING_EN_X, pady=20)
+        #self.bouton_importer = ctk.CTkButton(self, text="Importer un CSV", command=self._quand_importer)
+        #self.bouton_importer.grid(row=7, column=0, padx=PADDING_EN_X, pady=20)
+        #self.bouton_exporter = ctk.CTkButton(self, text="Exporter un CSV", command=self._quand_exporter)
+        #self.bouton_exporter.grid(row=7, column=1, padx=PADDING_EN_X, pady=20)
 
         # initialiser la variable pour les "radiobutton", empêche que plusieurs soient cochés
         self.radio_var = IntVar(value=0)
