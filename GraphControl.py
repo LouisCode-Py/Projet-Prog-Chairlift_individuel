@@ -25,13 +25,12 @@ class GraphControl(tk.Frame):
 
 
 #fonction pour que l'image puisse changer lors de la modification des parametres
-    def mise_a_jour_image(self,titrey="Personnes par heure"):
+    def mise_a_jour_image(self):
         
 
         #Création dictionnaire des noms d'axe des x possible et accesseur de paramètre ajouté
         parametre_obs = self.modele.obtenirParametreObserver()
         if parametre_obs != "angleInclinaison":
-            donnee = self.modele.obtenirDonneesGraphique(11,0,10)
         
             #Création attribut du titre de l'axe des x
             titrex_dic ={"vitesse":["Vitesse"], "nombreDeChaise":["Nombre de chaise"], "longueurDuTrajet":["Longueur du trajet"],
@@ -39,7 +38,16 @@ class GraphControl(tk.Frame):
             #Création attribut du titre de graphique
             titre_dic ={"vitesse":["Débit selon la vitesse"], "nombreDeChaise":["Débit selon les chaises"], "longueurDuTrajet":["Débit selon la longueur"],
                         "tempsEmbarquement":["Débit selon l'embarquement"],"tempsDebarquement":["Débit selon débarquement"],"nombreDePersonnesParChaise":["Débit selon la capacité par chaise"],
-                        "none":["Aucun paramètre sélectionné"]}      
+                        "none":["Aucun paramètre sélectionné"]}
+
+            #Créer dictionnaire des plages de données
+            plage_dic = {"vitesse":(80,0.1,8),
+                         "nombreDeChaise":(101,0,100),
+                         "longueurDuTrajet":(30000,0,3000),
+                         "tempsEmbarquement":(31,0,30),
+                         "tempsDebarquement":(31,0,30),
+                         "nombreDePersonnesParChaise":(9,0,8),
+                         "none":(11,0,10)}
 
             #Créer les titres concrets qui vont être mis dans le graphique
             titrex = titrex_dic[parametre_obs][0]
@@ -49,7 +57,9 @@ class GraphControl(tk.Frame):
             self.axis.clear()
             self.axis.set(title=titre,
                     xlabel=titrex, 
-                    ylabel=titrey)
+                    ylabel="Personnes par heure")
+            resolution, minimum, maximum = plage_dic.get(parametre_obs)
+            donnee = self.modele.obtenirDonneesGraphique(resolution,minimum,maximum)
 
             #Cas où aucun paramètre n'est selectionné
             if donnee is None or donnee.size == 0:
@@ -60,6 +70,8 @@ class GraphControl(tk.Frame):
                 x,y = donnee.T
                 self.axis.plot(x, y, label=titre)
                 self.axis.legend()
+
+                
         if parametre_obs == "angleInclinaison":
             # Angle plus haut "contre" friction, ce qui fait que moins d'énergie est requise à un plus haut angle
             x=self.energy.listeX()
@@ -68,7 +80,7 @@ class GraphControl(tk.Frame):
             self.axis.set(title="Énergie en fonction de l'angle",
                           xlabel="Angle inclinaison (°)",
                           ylabel="Énergie (Wh)")
-            self.axis.plot(x, y)
+            self.axis.plot(x, y,label="Énergie (Wh)")
             self.axis.legend()
 
         self.axis.grid(alpha=0.3)
