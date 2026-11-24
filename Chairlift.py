@@ -141,8 +141,6 @@ class Chairlift:
             elif self.__parametreObserver == "tempsDebarquement":
                 return int((3600 / (2*(self.__longueurDuTrajet/self.__vitesse) + self.__tempsEmbarquement + valeurParametre)) * self.__nombreDeChaise * self.__nombreDePersonnesParChaise)
 
-            #elif self.__parametreObserver == "angleInclinaison":
-
             else:
                 return 0
         except (ZeroDivisionError, TypeError, ValueError, OverflowError):
