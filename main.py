@@ -3,6 +3,7 @@ from Chairlift import Chairlift
 from GraphControl import GraphControl
 from Energy import Energy
 from Fiche import Fiche
+from BarGraph import BarGraph
 import tkinter as tk
 
 import customtkinter as ctk
@@ -62,7 +63,7 @@ class MainApp(ctk.CTkFrame) :
 
         # Appeler mettre à jour qui met à jour l'image/le graph
         self.mettre_a_jour()
-
+    # TODO FAIRE UN BOUTON CASCADE POUR SELECTIONNER TYPE DE GRAPH
     # Creer barre de menu pour selectionner entre page d'acceuil et graphe a barres d'energie
     def create_menu(self):
         menu_bar = tk.Menu(self)
