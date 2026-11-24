@@ -4,7 +4,7 @@ from GraphControl import GraphControl
 from Energy import Energy
 from Fiche import Fiche
 from BarGraph import BarGraph
-import tkinter as tk
+from CTkMenuBar import *
 
 import customtkinter as ctk
 
@@ -27,21 +27,42 @@ class MainApp(ctk.CTkFrame) :
         # Initialisation d'une instance d'energie
         self.energy = Energy(self, self.__chairlift)
 
+        # Initialiser le frame du Graphique bar
+        self.barGraph = BarGraph(self, self.__chairlift,self.energy)
+        self.barGraph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
-        # Initialiser la frame du Graphique
+        # Initialiser le frame du Graphique ligne
         self.graph = GraphControl(self, self.__chairlift,self.energy)
         self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
 
+
+
         # Affichage du label du nombre de personnes par heure avec les paramètres courants.
         self.label_nb_personne = ctk.CTkLabel(self, bg_color="white", text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()), text_color="black")
-        self.label_nb_personne.grid(row=1, column=1, sticky="nsew", padx=10, pady=(0,12))\
+        #self.label_nb_personne.grid(row=1, column=1, sticky="nsew", padx=10, pady=(0,12))\
+
 
 
         
-        # Bouton de rafraichissement
-        #self.bouton_rafraichissement = ctk.CTkButton(self, text="Déselectionner", command=self._rafraichissement)
-        #self.bouton_rafraichissement.grid(row=2, column=1, sticky="nsew", padx=12, pady=(3,12))
+        # Création de barre de sélection en haut de l'application principale
+        menu = CTkMenuBar(master=parent)
+        # Ajout de cascade et bouton principale
+        selectionGraphique = menu.add_cascade("Type de graphique")
+        selectionG = CustomDropdownMenu(widget=selectionGraphique)
+        menuSecondaireG = selectionG.add_submenu("Graphique") 
+        menuSecondaireG.add_option(option="Ligne",command=self._quand_selectionner_ligne)
+        menuSecondaireG.add_option(option="Barres",command=self._quand_selectionner_bar)
+
+        # Création sélection de boutons chargement et sauvegarde csv 
+        exportImport = menu.add_cascade("Sauvegarde/Charge")
+        selectionEI = CustomDropdownMenu(widget=exportImport)
+        menuSelectionEI = selectionEI.add_submenu("Option désirée : ")
+        menuSelectionEI.add_option(option="Sauvegarder",command=self.sliders._quand_exporter)
+        menuSelectionEI.add_option(option="Charger",command=self.sliders._quand_importer)
+
+
+
 
         # Bouton de déselection
         self.bouton_deselection = ctk.CTkButton(self, text="Déselectionner", command=self._rafraichissement)
@@ -63,19 +84,17 @@ class MainApp(ctk.CTkFrame) :
 
         # Appeler mettre à jour qui met à jour l'image/le graph
         self.mettre_a_jour()
-    # TODO FAIRE UN BOUTON CASCADE POUR SELECTIONNER TYPE DE GRAPH
-    # Creer barre de menu pour selectionner entre page d'acceuil et graphe a barres d'energie
-    def create_menu(self):
-        menu_bar = tk.Menu(self)
-        self.config(menu=menu_bar)
+    
+    def _quand_selectionner_ligne(self):
+        self.graph.tkraise()
 
-        selection_menu = tk.Menu(menu_bar,tearoff=0)
-        menu_bar.add_cascade(label="Selection", menu=selection_menu)
-        ###selection_menu.add_command(label="Page acceuil", command=self.) ## Trouver comment mettre page acceuil comme premiere option
+    def _quand_selectionner_bar(self):
+        self.barGraph.tkraise()
 
     # Mettre à jour le graphique 
     def mettre_a_jour(self):
         self.graph.mise_a_jour_image()
+        self.barGraph.mise_a_jour_image()
         
         self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
@@ -102,13 +121,13 @@ class Application(ctk.CTk):
 
 
     def show_fiche(self):
-        self.current_view = Fiche(self, self.show_main)
-        self.current_view.pack(fill="both", expand=True)     
+        self.fenetre = Fiche(self, self.show_main)
+        self.fenetre.pack(fill="both", expand=True)     
 
     def show_main(self):
-        self.current_view.destroy()
-        self.current_view = MainApp(self)
-        self.current_view.pack(fill="both",expand=True)   
+        self.fenetre.destroy()
+        self.fenetre = MainApp(self)
+        self.fenetre.pack(fill="both",expand=True)
 
     #Loop du MainApp et choix de l'apparence du ctk
 if __name__ == "__main__" :
