@@ -160,3 +160,10 @@ class Energy:
         "puissance_electrique": self.__powerElectric,
         "energie_totale": self.total_energy(),
     }
+
+    def coutTotal(self):
+        resultats = self.calculerTout()
+
+        dollarPerWattHour = 0.0001427
+
+        return resultats["energie_totale"] * dollarPerWattHour
