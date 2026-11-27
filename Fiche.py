@@ -7,6 +7,7 @@ from pathlib import Path
 class Fiche(ctk.CTkFrame):
     def __init__(self,parent,continuer):
         super().__init__(parent)
+        # Crée le path pour avoir l'image de fond d'écran
         image_path = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent)) / "96431.png"
         image = Image.open(image_path)
         self.fond_ecran = ctk.CTkImage(light_image=image,dark_image=image,size=(1200,700))
@@ -14,6 +15,7 @@ class Fiche(ctk.CTkFrame):
         self.bg_label = ctk.CTkLabel(self, text="", image=self.fond_ecran)
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
+        # Création du bouton d'accueil
         self.button = ctk.CTkButton(self,text="Bienvenue, veuillez cliquer pour continuer",
                                     font=("Arial",23,"bold"),
                                     fg_color="black",hover_color="black",width=500,height=50, command=continuer)
