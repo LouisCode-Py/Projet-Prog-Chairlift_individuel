@@ -5,6 +5,7 @@ from Energy import Energy
 from Fiche import Fiche
 from BarGraph import BarGraph
 from CTkMenuBar import *
+from CTkMessagebox import CTkMessagebox
 
 import customtkinter as ctk
 
@@ -63,6 +64,23 @@ class MainApp(ctk.CTkFrame) :
 
 
 
+        # Création de bouton dans la barre de menu pour quitter
+        option = menu.add_cascade("Option")
+        selectionO = CustomDropdownMenu(widget=option)
+        # Ajout d'une option pour calculer énergie
+        menuOption = selectionO.add_option("Énergie",command=self._energie_calcul)
+        menuOption = selectionO.add_option("Coût",command=self.coutEnDollar)
+
+
+        # Change le poids de la colonne 4 pour qu'elle prends toute la place restante sur la barre de menu
+        menu.grid_columnconfigure(4, weight=1)
+        # Ferme la fenêtre
+        quitter = menu.add_cascade("Quitter",command=self.winfo_toplevel().destroy)
+        # Place la colonne de l'option quitter totalement à droite avec un espace de 15 pixel entre la bordure et le bouton
+        quitter.grid(row=0,column=4,sticky="e",padx=(0,15))
+
+
+
 
         # Bouton de déselection
         self.bouton_deselection = ctk.CTkButton(self, text="Déselectionner", command=self._rafraichissement)
@@ -107,9 +125,25 @@ class MainApp(ctk.CTkFrame) :
         #self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
     def _energie_calcul(self):
-        self.energy.calculerTout()
-        self.energy.total_energy()
-        #self.label_calcul_energie.configure(text="Tout energie : " + str(self))
+        resultats = self.energy.calculerTout()
+        CTkMessagebox(
+            #Accède au dictionnaire de calculerTout pour sortir energie totale et puissance total
+            #:.2f fait afficher au plus 2 decimales
+            title="Énergie",
+            message=(f"Énergie totale : {resultats['energie_totale']:.2f} Wh \n"
+            f"Puissance totale : {resultats['puissance_electrique']:.2f} W"
+            )
+        )
+
+    def coutEnDollar(self):
+        cout = self.energy.coutTotal()
+        CTkMessagebox(
+            #Prend ce que la fonction de Energy, coutTotal retourne et le met dans un message box
+            title="Coût a faire fonctionner par heure",
+            message=(
+                f"{cout:.2f} $"
+                )
+        )
 
 
 class Application(ctk.CTk):
