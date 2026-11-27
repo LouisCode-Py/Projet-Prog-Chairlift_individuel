@@ -117,6 +117,7 @@ class MainApp(ctk.CTkFrame) :
     def _quand_selectionner_bar(self):
         self.barGraph.tkraise()
 
+    # Permet de placer le graphique de points par dessus le graphique de lignes
     def _quand_selectionner_points(self):
         self.scatterGraph.tkraise()
 
