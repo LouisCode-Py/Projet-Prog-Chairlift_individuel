@@ -1,11 +1,14 @@
 import customtkinter as ctk
 from PIL import Image
+import sys
+from pathlib import Path
 
 
 class Fiche(ctk.CTkFrame):
     def __init__(self,parent,continuer):
         super().__init__(parent)
-        image = Image.open("96431.png")
+        image_path = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent)) / "96431.png"
+        image = Image.open(image_path)
         self.fond_ecran = ctk.CTkImage(light_image=image,dark_image=image,size=(1200,700))
 
         self.bg_label = ctk.CTkLabel(self, text="", image=self.fond_ecran)
