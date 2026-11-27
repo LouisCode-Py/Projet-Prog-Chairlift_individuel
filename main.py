@@ -1,6 +1,7 @@
 from Sliders import Sliders
 from Chairlift import Chairlift
 from GraphControl import GraphControl
+from GraphScatter import GraphScatter
 from Energy import Energy
 from Fiche import Fiche
 from BarGraph import BarGraph
@@ -32,6 +33,10 @@ class MainApp(ctk.CTkFrame) :
         self.barGraph = BarGraph(self, self.__chairlift,self.energy)
         self.barGraph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
 
+        # Initialiser le frame du Graphique scatter
+        self.scatterGraph = GraphScatter(self,self.__chairlift,self.energy)
+        self.scatterGraph.grid(row=0,column=1,sticky="nsew",padx=12,pady=12)
+
         # Initialiser le frame du Graphique ligne
         self.graph = GraphControl(self, self.__chairlift,self.energy)
         self.graph.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
@@ -54,6 +59,7 @@ class MainApp(ctk.CTkFrame) :
         menuSecondaireG = selectionG.add_submenu("Graphique") 
         menuSecondaireG.add_option(option="Ligne",command=self._quand_selectionner_ligne)
         menuSecondaireG.add_option(option="Barres",command=self._quand_selectionner_bar)
+        menuSecondaireG.add_option(option="Points",command=self._quand_selectionner_points)
 
         # Création sélection de boutons chargement et sauvegarde csv 
         exportImport = menu.add_cascade("Sauvegarde/Charge")
@@ -103,16 +109,22 @@ class MainApp(ctk.CTkFrame) :
         # Appeler mettre à jour qui met à jour l'image/le graph
         self.mettre_a_jour()
     
+    # Permet de placer le graphique de ligne par dessus le graphique de barres
     def _quand_selectionner_ligne(self):
         self.graph.tkraise()
 
+    # Permet de placer le graphique de barres par dessus le graphique de lignes
     def _quand_selectionner_bar(self):
         self.barGraph.tkraise()
+
+    def _quand_selectionner_points(self):
+        self.scatterGraph.tkraise()
 
     # Mettre à jour le graphique 
     def mettre_a_jour(self):
         self.graph.mise_a_jour_image()
         self.barGraph.mise_a_jour_image()
+        self.scatterGraph.mise_a_jour_image()
         
         self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
@@ -124,6 +136,8 @@ class MainApp(ctk.CTkFrame) :
         
         #self.label_nb_personne.configure(text="Nombre de personnes par heure : " + str(self.__chairlift.calculerNombreDePersonnesParHeure()))
 
+
+    # Fonction pour afficher un MessageBox avec l'énergie et puissance
     def _energie_calcul(self):
         resultats = self.energy.calculerTout()
         CTkMessagebox(
@@ -135,6 +149,7 @@ class MainApp(ctk.CTkFrame) :
             )
         )
 
+    # Fonction pour afficher le cout total par heure
     def coutEnDollar(self):
         cout = self.energy.coutTotal()
         CTkMessagebox(
@@ -146,6 +161,7 @@ class MainApp(ctk.CTkFrame) :
         )
 
 
+# Définition de classe Application
 class Application(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -153,11 +169,12 @@ class Application(ctk.CTk):
         self.geometry("1200x700")
         self.show_fiche()
 
-
+    # Méthode pour afficher la fenêtre d'accueil
     def show_fiche(self):
         self.fenetre = Fiche(self, self.show_main)
         self.fenetre.pack(fill="both", expand=True)     
 
+    # Méthode pour afficher la fenêtre principale d'accueil
     def show_main(self):
         self.fenetre.destroy()
         self.fenetre = MainApp(self)

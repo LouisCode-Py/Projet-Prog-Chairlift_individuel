@@ -25,7 +25,6 @@ class BarGraph(tk.Frame):
 
 # Fonction de changement de données affichées
     def mise_a_jour_image(self):
-        #TODO NOMBRE DE CHAISE ET LONGEUR CABLE GRAPH MAKES NO GOD DAMN SENSE
         # Trouver le paramètre observé
         param_obs = self.modele.obtenirParametreObserver()
 
@@ -42,7 +41,7 @@ class BarGraph(tk.Frame):
             #Création de plage de données
             plage_dic = {"vitesse":(80,0.1,8),
                          "nombreDeChaise":(101,0,100),
-                         "longueurDuTrajet":(3000,0,3000),
+                         "longueurDuTrajet":(100,0,3000),
                          "tempsEmbarquement":(31,0,30),
                          "tempsDebarquement":(31,0,30),
                          "nombreDePersonnesParChaise":(9,0,8),
@@ -64,10 +63,15 @@ class BarGraph(tk.Frame):
                 self.axis.text(0.5,0.5,"Aucune données", transform=self.axis.transAxes,
                     ha="center", va="center")
             
+            elif param_obs == "longueurDuTrajet":
+                x,y = donnee.T
+                # Change la largeur de chaque barres
+                self.axis.bar(x, y,width=15, label=titre)
+                self.axis.legend()
+            
             else:
                 x,y = donnee.T
-                self.axis.bar(x, y, label=titre)
-                self.axis.legend()
+                self.axis.bar(x,y,label=titre)
 
         if param_obs == "angleInclinaison":
             # Angle plus haut "contre" friction, ce qui fait que moins d'énergie est requise à un plus haut angle

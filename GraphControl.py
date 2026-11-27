@@ -43,7 +43,7 @@ class GraphControl(tk.Frame):
             #Créer dictionnaire des plages de données
             plage_dic = {"vitesse":(80,0.1,8),
                          "nombreDeChaise":(101,0,100),
-                         "longueurDuTrajet":(30000,0,3000),
+                         "longueurDuTrajet":(1000,0,3000),
                          "tempsEmbarquement":(31,0,30),
                          "tempsDebarquement":(31,0,30),
                          "nombreDePersonnesParChaise":(9,0,8),

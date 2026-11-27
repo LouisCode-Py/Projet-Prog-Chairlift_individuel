@@ -4,8 +4,8 @@ from Chairlift import Chairlift
 
 class Energy:
 
-    #PAR HEURE, POIDS CHAISE OK, POIDS PERSONNES OK, POIDS CABLE (M/KG) OK
 
+    # initialisation d'une instance d'Energy
     def __init__(self,parent, chairlift):
         self.__chairlift = chairlift
         self.__gravity = 9.81 # m/s^2
@@ -66,6 +66,7 @@ class Energy:
     # Total energy = P_electric × operating time
     # K non necessaire au long terme, juste utiliser au depart du chairlift
 
+    # Méthode pour calculer l'énergie que le remonte pente utilise
     def energy_lift(self):
 
         hauteur = (self.__chairlift.obtenirLongueurDuTrajet() * np.sin(self._angle_radians))
@@ -74,6 +75,7 @@ class Energy:
         
         return self.__energieLift
 
+    # Méthode pour calculer puissance utilisée par le lift
     def power_lift(self):
         self.__powerLift = self.__energieLift / 3600
         return self.__powerLift
@@ -94,15 +96,18 @@ class Energy:
         return self.__powerFriction
 
 
+    # Calcule la puissance électrique
     def power_electric(self):
         self.__powerElectric = (self.__powerLift + self.__powerFriction) / 0.8
         return self.__powerElectric
 
 
+    # Calcule énergie totale
     def total_energy(self):
         self.__energieTot = self.__powerElectric * 12
         return self.__energieTot
 
+    # Crée liste des données en x
     def listeX(self):
         donneesX = []
         for i in range(61):
@@ -110,6 +115,7 @@ class Energy:
         return donneesX
 
 
+    # Crée liste des données en y
     def calculerY(self):
         # Initialiser paramètres de base
         angles = self.listeX()
@@ -142,6 +148,7 @@ class Energy:
         return donneesY
 
 
+    # Clacule tout
     def calculerTout(self):
         print(self.obtenirRad(),
         self.poidsC(),
@@ -161,6 +168,7 @@ class Energy:
         "energie_totale": self.total_energy(),
     }
 
+    # Calcule le cout avec une moyenne de prix de Wh aux États-Unis
     def coutTotal(self):
         resultats = self.calculerTout()
 
