@@ -77,7 +77,6 @@ class GraphScatter(tk.Frame):
                             xlabel="Angle inclinaison (°)",
                             ylabel="Énergie (Wh)")
             self.axis.scatter(x, y)
-            self.axis.legend()
 
         self.axis.grid(alpha=0.3)
         self.canvas.draw_idle()

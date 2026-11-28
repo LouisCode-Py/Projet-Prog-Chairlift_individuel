@@ -81,7 +81,6 @@ class GraphControl(tk.Frame):
                           xlabel="Angle inclinaison (°)",
                           ylabel="Énergie (Wh)")
             self.axis.plot(x, y,label="Énergie (Wh)")
-            self.axis.legend()
 
         self.axis.grid(alpha=0.3)
         self.canvas.draw_idle()
