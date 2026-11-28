@@ -53,7 +53,7 @@ class BarGraph(tk.Frame):
             titre = titre_dic[param_obs][0]
 
             self.axis.clear()
-            self.axis.set(title=titre,xlabel=titrex,ylabel="Personnes par heure")
+            self.axis.set(title=titre,xlabel="Personnes par heure",ylabel=titrex)
 
             resolution, minimum, maximum = plage_dic.get(param_obs)
             donnee = self.modele.obtenirDonneesGraphique(resolution,minimum,maximum)
@@ -65,13 +65,13 @@ class BarGraph(tk.Frame):
             
             elif param_obs == "longueurDuTrajet":
                 x,y = donnee.T
-                # Change la largeur de chaque barres
-                self.axis.bar(x, y,width=15, label=titre)
+                # Change la hauteur de chaque barre
+                self.axis.barh(x, y,height=15, label=titre)
                 self.axis.legend()
             
             else:
                 x,y = donnee.T
-                self.axis.bar(x,y,label=titre)
+                self.axis.barh(x,y,label=titre)
 
         if param_obs == "angleInclinaison":
             # Angle plus haut "contre" friction, ce qui fait que moins d'énergie est requise à un plus haut angle
@@ -79,9 +79,9 @@ class BarGraph(tk.Frame):
             y = self.energy.calculerY()
             self.axis.clear()
             self.axis.set(title="Énergie en fonction de l'angle",
-                            xlabel="Angle inclinaison (°)",
-                            ylabel="Énergie (Wh)")
-            self.axis.bar(x, y)
+                            xlabel="Énergie (Wh)",
+                            ylabel="Angle inclinaison (°)")
+            self.axis.barh(x, y)
 
         self.axis.grid(alpha=0.3)
         self.canvas.draw_idle()
