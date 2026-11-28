@@ -109,9 +109,7 @@ class Energy:
 
     # Crée liste des données en x
     def listeX(self):
-        donneesX = []
-        for i in range(61):
-            donneesX.append(i)
+        donneesX = np.arange(61)
         return donneesX
 
 
@@ -119,7 +117,7 @@ class Energy:
     def calculerY(self):
         # Initialiser paramètres de base
         angles = self.listeX()
-        donneesY = []
+        donneesY =np.zeros(len(angles))
         angle_initial = self.__chairlift.obtenirAngleInclinaison()
 
         # Calculer poids de chaque objet qui change la demande de travail
@@ -127,7 +125,6 @@ class Energy:
         self.poidsChaiseT()
         self.poidsP()
         self.poidsCableTotal()
-
         try:
             for angle in angles:
                 self.__chairlift.definirAngle(angle)
@@ -139,7 +136,7 @@ class Energy:
                 self.power_electric()
 
                 # Ajout de l'énergie a la liste de valeur des y
-                donneesY.append(self.total_energy())
+                donneesY[angle] = self.total_energy()
 
         # Fait en sorte que peu importe si le try fonctionne ou non, finally est exécuté (remet l'angle initial en tant qu'angle défini)
         finally:
